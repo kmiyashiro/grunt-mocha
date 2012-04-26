@@ -6,9 +6,7 @@
 
 ## Getting Started
 
-Install this grunt plugin next to your project's [grunt.js gruntfile][getting_started] with: `npm install grunt-mocha`
-
-(ie. the plugin is installed locally. If you want to install it globally - which is not recommended - check out the official [grunt documentation][plugin_docs])
+Install this grunt plugin next to your project's [grunt.js gruntfile](https://github.com/cowboy/grunt/blob/master/docs/getting_started.md) with: `npm install grunt-mocha`
 
 Then add this line to your project's `grunt.js` gruntfile at the bottom:
 
