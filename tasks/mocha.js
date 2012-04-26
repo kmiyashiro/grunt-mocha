@@ -235,7 +235,7 @@ module.exports = function(grunt) {
       // Log results.
       if (status.failed > 0) {
         growl(status.failed + ' of ' + status.total + ' tests failed!', {
-            image: 'tasks/mocha/error.png',
+            image: __dirname + '/mocha/error.png',
             title: 'Tests Failed',
             priority: 3
         });
@@ -244,7 +244,7 @@ module.exports = function(grunt) {
       } else {
         growl('All Clear: ' + status.total + ' tests passed', {
             title: 'Tests Passed',
-            image: 'tasks/mocha/ok.png'
+            image: __dirname + '/mocha/ok.png'
         });
         verbose.writeln();
         log.ok(status.total + ' assertions passed (' + status.duration + 'ms)');
