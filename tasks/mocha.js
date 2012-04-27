@@ -6,6 +6,11 @@
  * Copyright (c) 2012 "Cowboy" Ben Alman
  * Licensed under the MIT license.
  * http://benalman.com/about/license/
+ *
+ * Mocha task
+ * Copyright (c) 2012 Kelly Miyashiro
+ * Licensed under the MIT license.
+ * http://benalman.com/about/license/
  */
 
 module.exports = function(grunt) {
