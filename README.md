@@ -1,6 +1,6 @@
 # grunt-mocha
 
-(package/README format heavily borrowed from [grunt-jasmine-task](https://github.com/jzaefferer/grunt-css) and builtin QUnit task)
+(package/README format heavily borrowed from [grunt-jasmine-task](hhttps://github.com/creynders/grunt-jasmine-task) and builtin QUnit task)
 
 [Grunt](https://github.com/cowboy/grunt) plugin for running Mocha browser specs in a headless browser (PhantomJS)
 
