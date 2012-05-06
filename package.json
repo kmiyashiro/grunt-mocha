@@ -1,7 +1,7 @@
 {
   "name": "grunt-mocha",
   "description": "Grunt task for running Mocha specs",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "https://github.com/kmiyashiro/grunt-mocha",
   "author": {
     "name": "Kelly Miyashiro",
@@ -34,6 +34,9 @@
   },
   "devDependencies": {
     "grunt": "~0.3.8"
+  },
+  "optionalDependencies": {
+    "growl": "~1"
   },
   "keywords": [
     "gruntplugin"

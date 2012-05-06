@@ -37,6 +37,10 @@ You also need to have Mocha included and called inside your spec html file. This
 
 You must also write tests. How much detail do I need to give here?
 
+### Maybe Growl?
+
+Growl support is optional. I'm not sure what the Windows situation is with growl.
+
 ### Hacks
 
 The PhantomJS -> Grunt superdimensional conduit uses `alert`. If you have disabled or aliased alert in your app, this won't work. I have conveniently set a global `PHANTOMJS` on `window` so you can conditionally override alert in your app.

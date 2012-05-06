@@ -28,10 +28,18 @@ module.exports = function(grunt) {
   // Nodejs libs.
   var fs = require('fs');
   var path = require('path');
-  var growl = require('growl');
 
   // External libs.
   var Tempfile = require('temporary/lib/file');
+  var growl;
+  
+  // Growl is optional
+  try {
+    growl = require('growl');
+  } catch(e) {
+    growl = function(){};
+    verbose.write('Growl not found, npm install growl for Growl support');
+  }
 
   // Keep track of the last-started module, test and status.
   var currentModule, currentTest, status;
@@ -72,18 +80,6 @@ module.exports = function(grunt) {
     suiteDone: function(name, failed, passed, total) {
       delete unfinished[name];
     },
-    // TODO: Make one of these for mocha, this is for qunit, see testFail
-    // log: function(result, actual, expected, message, source) {
-    //   if (!result) {
-    //     failedAssertions.push({
-    //       actual: actual,
-    //       expected: expected,
-    //       message: message,
-    //       source: source,
-    //       testName: currentTest
-    //     });
-    //   }
-    // },
     testStart: function(name) {
       currentTest = (currentModule ? currentModule + ' - ' : '') + name;
       verbose.write(currentTest + '...');
@@ -98,7 +94,7 @@ module.exports = function(grunt) {
         // list assertions
         if (option('verbose')) {
           log.error();
-          // logFailedAssertions();
+          logFailedAssertions();
         } else {
           log.write('F'.red);
         }
@@ -240,16 +236,16 @@ module.exports = function(grunt) {
       // Log results.
       if (status.failed > 0) {
         growl(status.failed + ' of ' + status.total + ' tests failed!', {
-            image: __dirname + '/mocha/error.png',
-            title: 'Tests Failed',
-            priority: 3
+          image: __dirname + '/mocha/error.png',
+          title: 'Tests Failed',
+          priority: 3
         });
         grunt.warn(status.failed + '/' + status.total + ' assertions failed (' +
           status.duration + 'ms)', Math.min(99, 90 + status.failed));
       } else {
         growl('All Clear: ' + status.total + ' tests passed', {
-            title: 'Tests Passed',
-            image: __dirname + '/mocha/ok.png'
+          title: 'Tests Passed',
+          image: __dirname + '/mocha/ok.png'
         });
         verbose.writeln();
         log.ok(status.total + ' assertions passed (' + status.duration + 'ms)');
