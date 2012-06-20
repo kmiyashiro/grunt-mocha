@@ -1,4 +1,4 @@
-// Important: You must install `temporary` `npm install temporary`
+// Important: You must install `temporary`: `npm install`
 /*
  * grunt
  * https://github.com/cowboy/grunt

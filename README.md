@@ -1,3 +1,5 @@
+Automatically run *client-side* mocha specs via grunt/mocha/PhantomJS
+
 # grunt-mocha
 
 (package/README format heavily borrowed from [grunt-jasmine-task](hhttps://github.com/creynders/grunt-jasmine-task) and builtin QUnit task)
@@ -5,6 +7,8 @@
 [Grunt](https://github.com/cowboy/grunt) plugin for running Mocha browser specs in a headless browser (PhantomJS)
 
 ## Getting Started
+
+Example setup (advanced): https://gist.github.com/2655876
 
 ### Grunt and this plugin
 Install this grunt plugin next to your project's [grunt.js gruntfile](https://github.com/cowboy/grunt/blob/master/docs/getting_started.md) with: `npm install grunt-mocha`

@@ -56,9 +56,10 @@ var GruntReporter = function(runner){
       failed  : this.failures,
       passed  : this.total - this.failures,
       total   : this.total
+      // TODO: Add time
     };
     
-    sendMessage('done', output.failed,output.passed, output.total);
+    sendMessage('done', output.failed, output.passed, output.total);
   });
 };
 
