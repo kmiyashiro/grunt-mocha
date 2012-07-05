@@ -8,7 +8,13 @@ Automatically run *client-side* mocha specs via grunt/mocha/PhantomJS
 
 ## Getting Started
 
-Example setup (advanced): https://gist.github.com/2655876
+**Important note**
+
+If you are not using AMD, include `mocha-helper.js` from `tasks/mocha` after you include `mocha.js` and run `mocha.setup`. The helper will override `mocha.setup` if it detects PhantomJS.
+
+See the example folder for a vanilla example.
+
+Example setup with AMD (advanced): https://gist.github.com/2655876
 
 ### Grunt and this plugin
 Install this grunt plugin next to your project's [grunt.js gruntfile](https://github.com/cowboy/grunt/blob/master/docs/getting_started.md) with: `npm install grunt-mocha`
@@ -37,9 +43,13 @@ This task is for running Mocha tests in a headless browser, PhantomJS. [See the 
 
 ### Mocha
 
-You also need to have Mocha included and called inside your spec html file. This task does not do that for you, please do it yourself. If you do not know what I am talking about, how did you find this page?
+Use [Mocha](http://visionmedia.github.com/mocha/)
 
-You must also write tests. How much detail do I need to give here?
+If you are not using AMD, include `mocha-helper.js` from `tasks/mocha` after you include `mocha.js` and run `mocha.setup`. The helper will override `mocha.setup` if it detects PhantomJS.
+
+See the example folder for a vanilla example.
+
+Example setup with AMD (advanced): https://gist.github.com/2655876
 
 ### Maybe Growl?
 
