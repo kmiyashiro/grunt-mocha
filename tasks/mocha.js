@@ -129,7 +129,7 @@ module.exports = function(grunt) {
     },
     
     // console.log pass-through.
-    // console: console.log.bind(console),
+    console: console.log.bind(console),
     // Debugging messages.
     debug: log.debug.bind(log, 'phantomjs')
   };
@@ -241,14 +241,14 @@ module.exports = function(grunt) {
           priority: 3
         });
         grunt.warn(status.failed + '/' + status.total + ' assertions failed (' +
-          status.duration + 'ms)', Math.min(99, 90 + status.failed));
+          status.duration + 's)', Math.min(99, 90 + status.failed));
       } else {
         growl('All Clear: ' + status.total + ' tests passed', {
           title: 'Tests Passed',
           image: __dirname + '/mocha/ok.png'
         });
         verbose.writeln();
-        log.ok(status.total + ' assertions passed (' + status.duration + 'ms)');
+        log.ok(status.total + ' assertions passed (' + status.duration + 's)');
       }
 
       // All done!
