@@ -129,7 +129,7 @@ module.exports = function(grunt) {
     },
     
     // console.log pass-through.
-    console: console.log.bind(console),
+    // console: console.log.bind(console),
     // Debugging messages.
     debug: log.debug.bind(log, 'phantomjs')
   };
