@@ -29,7 +29,6 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "grunt": "~0.3",
     "temporary": "~0.0.2"
   },
   "devDependencies": {
