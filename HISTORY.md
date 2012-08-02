@@ -1,3 +1,6 @@
+# 0.1.3
+* Remove grunt from deps
+
 # 0.1.2
 * Added example for non-AMD usage. Modified mocha-helper to be included in page (optional)
 * Added duration

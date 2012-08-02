@@ -1,7 +1,7 @@
 {
   "name": "grunt-mocha",
   "description": "Grunt task for running Mocha specs",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "homepage": "https://github.com/kmiyashiro/grunt-mocha",
   "author": {
     "name": "Kelly Miyashiro",
