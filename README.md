@@ -17,6 +17,9 @@ See the example folder for a vanilla example.
 Example setup with AMD (advanced): https://gist.github.com/2655876
 
 ### Grunt and this plugin
+
+First, make sure you have grunt installed globally, `npm install grunt -g`
+
 Install this grunt plugin next to your project's [grunt.js gruntfile](https://github.com/cowboy/grunt/blob/master/docs/getting_started.md) with: `npm install grunt-mocha`
 
 Then add this line to your project's `grunt.js` gruntfile at the bottom:
