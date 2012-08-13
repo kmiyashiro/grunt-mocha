@@ -59,4 +59,6 @@ module.exports = function(grunt) {
     
     // Default task.
     task.registerTask('default', 'mocha');
+    
+    grunt.loadNpmTasks('grunt-mocha');
 };
