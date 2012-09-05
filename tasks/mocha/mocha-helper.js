@@ -17,7 +17,11 @@
     }
 
     var GruntReporter = function(runner){
-      Mocha.reporters.HTML.call(this, runner);
+      // 1.4.2 moved reporters to Mocha instead of mocha
+      var reporters = Mocha.reporters || mocha.reporters;
+
+      reporters.HTML.call(this, runner);
+
       var stats = this.stats;
   
       runner.on('test', function(test) {
