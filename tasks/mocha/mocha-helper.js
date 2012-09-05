@@ -17,7 +17,7 @@
     }
 
     var GruntReporter = function(runner){
-      mocha.reporters.HTML.call(this, runner);
+      Mocha.reporters.HTML.call(this, runner);
       var stats = this.stats;
   
       runner.on('test', function(test) {
