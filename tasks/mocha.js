@@ -103,10 +103,11 @@ module.exports = function(grunt) {
       }
     },
     done: function(failed, passed, total, duration) {
+      var nDuration = parseFloat(duration, 10) || 0;
       status.failed += failed;
       status.passed += passed;
       status.total += total;
-      status.duration += duration;
+      status.duration += Math.round(nDuration, 2);
       // Print assertion errors here, if verbose mode is disabled.
       if (!option('verbose')) {
         if (failed > 0) {
