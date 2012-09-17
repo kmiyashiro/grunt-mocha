@@ -42,11 +42,25 @@ module.exports = function(grunt) {
             }
         },
         mocha: {
-            // runs all html files in the test dir
+            // runs all html files (except test2.html) in the test dir
             // In this example, there's only one, but you can add as many as
             // you want. You can split them up into different groups here
             // ex: admin: [ 'test/admin.html' ]
-            all: [ 'test/**/*.html' ],
+            all: [ 'test/**/!(test2).html' ],
+            
+            // Runs 'test/test2.html' with specified mocha options.
+            // This variant does not use explicit inclusion of 'mocha-helper.js' 
+            // and demonstrates running of mocha from auto-included 'mocha-helper.js'.
+            test2: {
+                // Test files
+                src: [ 'test/test2.html' ],
+                // mocha options
+                mocha: {
+                    ignoreLeaks: false
+                },
+                // Indicates whether 'mocha.run()' should be executed in 'mocha-helper.js'
+                run: true
+            }
         }
     });
 

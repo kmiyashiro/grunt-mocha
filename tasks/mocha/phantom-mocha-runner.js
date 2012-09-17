@@ -12,13 +12,16 @@
 /*global phantom:true*/
 
 var fs = require('fs');
+var system = require('system');
 
 // The temporary file used for communications.
-var tmpfile = phantom.args[0];
+var tmpfile = system.args[1];
 // The Mocha helper file to be injected.
-var mochaHelper = phantom.args[1];
+var mochaHelper = system.args[2];
 // The Mocha .html test file to run.
-var url = phantom.args[2];
+var url = system.args[3];
+// Config
+var configStr = system.args[4];
 
 // Keep track of the last time a Mocha message was sent.
 var last = new Date();
@@ -85,9 +88,9 @@ page.onResourceReceived = function(request) {
 };
 
 page.onInitialized = function() {
-  page.evaluate(function() {
-    window.PHANTOMJS = true;
-  });
+  page.evaluate(function(config) {
+    window.PHANTOMJS = config ? JSON.parse(config) : {};
+  }, configStr);
 };
 
 page.open(url, function(status) {

@@ -57,11 +57,24 @@
       });
     };
     
-    if (window.PHANTOMJS) {
-        mocha.setup({
-          ui: 'bdd',
-          ignoreLeaks: true,
-          reporter: GruntReporter
-        });
+    var phantom = window.PHANTOMJS;
+    if (phantom) {
+        var config = {
+              ui: 'bdd',
+              ignoreLeaks: true,
+              reporter: GruntReporter
+            },
+            options = phantom.mocha,
+            key;
+        if (options) {
+          for (key in options) {
+            config[key] = options[key];
+          }
+          config.reporter = GruntReporter;
+        }
+        mocha.setup(config);
+        if (phantom.run) {
+          mocha.run();
+        }
     }
 }());

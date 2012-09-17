@@ -142,6 +142,17 @@ module.exports = function(grunt) {
   grunt.registerMultiTask('mocha', 'Run Mocha unit tests in a headless PhantomJS instance.', function() {
     // Get files as URLs.
     var urls = file.expandFileURLs(this.file.src);
+    // Get additional configuration
+    var config;
+    if (utils.kindOf(this.data) === 'object') {
+      config = utils._.clone(this.data);
+      delete config.src;
+    }
+    else {
+      config = {};
+    }
+    var configStr = JSON.stringify(config);
+    verbose.writeln('Additional configuration: ' + configStr);
     
     // This task is asynchronous.
     var done = this.async();
@@ -185,10 +196,15 @@ module.exports = function(grunt) {
         var done = lines.slice(n).some(function(line) {
           // Get args and method.
           var args = JSON.parse(line);
-          var method = args.shift();
+          var method = args[0];
           // Execute method if it exists.
           if (phantomHandlers[method]) {
+            args.shift();
             phantomHandlers[method].apply(null, args);
+          }
+          // Otherwise log read data
+          else {
+            verbose.writeln("\n" + args.join(", "));
           }
           // If the method name started with test, return true. Because the
           // Array#some method was used, this not only sets "done" to true,
@@ -221,6 +237,8 @@ module.exports = function(grunt) {
           task.getFile('mocha/mocha-helper.js'),
           // URL to the Mocha .html test file to run.
           url,
+          // Additional configuration
+          configStr,
           // PhantomJS options.
           '--config=' + task.getFile('mocha/phantom.json')
         ],
