@@ -19,7 +19,7 @@ Example setup with AMD (advanced): https://gist.github.com/2655876
 **Alternative way is the following:**
 
 - write mocha task description in grunt config using full format and specify `run: true` option (see `example/grunt.js` for details);
-- check for PhantomJS `userAgent` in a test html-file and run tests only in a real browser (see `example/test/test2.html` for details).
+- check for PhantomJS `userAgent` in a test html file and run tests only in a real browser (see `example/test/test2.html` for details).
 
 In this case you shouldn't include `mocha-helper.js` (it will be included automatically) and tests will be run from `mocha-helper.js`.
 
