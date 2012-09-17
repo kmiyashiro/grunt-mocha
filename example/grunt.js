@@ -56,7 +56,8 @@ module.exports = function(grunt) {
                 src: [ 'test/test2.html' ],
                 // mocha options
                 mocha: {
-                    ignoreLeaks: false
+                    ignoreLeaks: false,
+                    grep: 'food'
                 },
                 // Indicates whether 'mocha.run()' should be executed in 'mocha-helper.js'
                 run: true

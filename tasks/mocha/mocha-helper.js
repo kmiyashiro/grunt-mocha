@@ -67,10 +67,15 @@
             options = phantom.mocha,
             key;
         if (options) {
-          for (key in options) {
-            config[key] = options[key];
+          if (typeof options === "string") {
+            config.ui = options;
           }
-          config.reporter = GruntReporter;
+          else {
+            for (key in options) {
+              config[key] = options[key];
+            }
+            config.reporter = GruntReporter;
+          }
         }
         mocha.setup(config);
         if (phantom.run) {
