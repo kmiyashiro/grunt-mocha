@@ -21,7 +21,6 @@ module.exports = function(grunt) {
                 'js/libs/acme/**/*.js'
             ]
         },
-        // pkg: '<json:package.json>',
         test: {
             files: ['test/**/*.js']
         },
@@ -49,31 +48,32 @@ module.exports = function(grunt) {
             all: [ 'test/**/!(test2).html' ],
             
             // Runs 'test/test2.html' with specified mocha options.
-            // This variant does not use explicit inclusion of 'mocha-helper.js' 
-            // and demonstrates running of mocha from auto-included 'mocha-helper.js'.
+            // This variant auto-includes 'mocha-helper.js' so you do not have
+            // to include it in your HTML spec file.
             test2: {
+
                 // Test files
                 src: [ 'test/test2.html' ],
+
                 // mocha options
                 mocha: {
                     ignoreLeaks: false,
                     grep: 'food'
                 },
-                // Indicates whether 'mocha.run()' should be executed in 'mocha-helper.js'
+
+                // Indicates whether 'mocha.run()' should be executed in 
+                // 'mocha-helper.js'
                 run: true
             }
         }
     });
-
-    // run `npm install grunt-mocha` in project root dir first
-    // grunt.loadNpmTasks('grunt-mocha');
-    task.loadTasks('../tasks');
 
     // Alias 'test' to 'mocha' so you can run `grunt test`
     task.registerTask('test', 'mocha');
     
     // Default task.
     task.registerTask('default', 'mocha');
-    
+
+    // run `npm install grunt-mocha` in project root dir
     grunt.loadNpmTasks('grunt-mocha');
 };
