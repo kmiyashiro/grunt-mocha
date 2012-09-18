@@ -1,5 +1,7 @@
 Automatically run *client-side* mocha specs via grunt/mocha/PhantomJS
 
+For a grunt task for server-side mocha tests, see https://github.com/yaymukund/grunt-simple-mocha
+
 # grunt-mocha
 
 (package/README format heavily borrowed from [grunt-jasmine-task](hhttps://github.com/creynders/grunt-jasmine-task) and builtin QUnit task)
@@ -8,20 +10,18 @@ Automatically run *client-side* mocha specs via grunt/mocha/PhantomJS
 
 ## Getting Started
 
-**Important note**
+### Vanilla JS
 
-If you are not using AMD, include `mocha-helper.js` from `tasks/mocha` after you include `mocha.js` and run `mocha.setup`. The helper will override `mocha.setup` if it detects PhantomJS.
-
-See the example folder for a vanilla example.
-
-Example setup with AMD (advanced): https://gist.github.com/2655876
-
-**Alternative way is the following:**
-
-- write mocha task description in grunt config using full format and specify `run: true` option (see `example/grunt.js` for details);
-- check for PhantomJS `userAgent` in a test html file and run tests only in a real browser (see `example/test/test2.html` for details).
+- Write mocha task description in grunt config using full format and specify `run: true` option (see `example/grunt.js` for details);
+- Check for PhantomJS `userAgent` in a test html file and run tests only in a real browser (see `example/test/test2.html` for details).
 
 In this case you shouldn't include `mocha-helper.js` (it will be included automatically) and tests will be run from `mocha-helper.js`.
+
+Alternatively, include `mocha-helper.js` from `tasks/mocha` after you include `mocha.js` and run `mocha.setup` in your HTML file. The helper will override `mocha.setup` if it detects PhantomJS. See `exampletest/test.html`.
+
+### AMD
+
+Example setup with AMD (advanced): https://gist.github.com/2655876
 
 ### Grunt and this plugin
 
@@ -54,12 +54,6 @@ This task is for running Mocha tests in a headless browser, PhantomJS. [See the 
 ### Mocha
 
 Use [Mocha](http://visionmedia.github.com/mocha/)
-
-If you are not using AMD, include `mocha-helper.js` from `tasks/mocha` after you include `mocha.js` and run `mocha.setup`. The helper will override `mocha.setup` if it detects PhantomJS.
-
-See the example folder for a vanilla example.
-
-Example setup with AMD (advanced): https://gist.github.com/2655876
 
 ### Maybe Growl?
 
