@@ -67,6 +67,9 @@ module.exports = function(grunt) {
             }
         }
     });
+    
+    // @DEBUG Remove this line in your grunt file, this is just for testing
+    grunt.loadTasks('../tasks');
 
     // Alias 'test' to 'mocha' so you can run `grunt test`
     task.registerTask('test', 'mocha');
@@ -74,6 +77,6 @@ module.exports = function(grunt) {
     // Default task.
     task.registerTask('default', 'mocha');
 
-    // run `npm install grunt-mocha` in project root dir
-    grunt.loadNpmTasks('grunt-mocha');
+    // run `npm install grunt-mocha` in project root dir and uncomment this
+    // grunt.loadNpmTasks('grunt-mocha');
 };
