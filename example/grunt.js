@@ -49,7 +49,8 @@ module.exports = function(grunt) {
             
             // Runs 'test/test2.html' with specified mocha options.
             // This variant auto-includes 'mocha-helper.js' so you do not have
-            // to include it in your HTML spec file.
+            // to include it in your HTML spec file. Instead, you must add an
+            // environment check before you run `mocha.run` in your HTML.
             test2: {
 
                 // Test files

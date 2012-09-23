@@ -1,14 +1,46 @@
 Automatically run *client-side* mocha specs via grunt/mocha/PhantomJS
 
-For a grunt task for server-side mocha tests, see https://github.com/yaymukund/grunt-simple-mocha
+For a grunt task for server-side mocha tests, see https://github.com/yaymukund/grunt-simple-mocha (Warning: These tasks currently share the same task name, we're working on resolving the conflict)
 
 # grunt-mocha
 
-(package/README format heavily borrowed from [grunt-jasmine-task](hhttps://github.com/creynders/grunt-jasmine-task) and builtin QUnit task)
+(package/README format heavily borrowed from [grunt-jasmine-task](https://github.com/creynders/grunt-jasmine-task) and builtin QUnit task)
 
 [Grunt](https://github.com/cowboy/grunt) plugin for running Mocha browser specs in a headless browser (PhantomJS)
 
 ## Getting Started
+
+### Task config
+
+```js
+mocha: {
+    // runs all html files (except test2.html) in the test dir
+    // In this example, there's only one, but you can add as many as
+    // you want. You can split them up into different groups here
+    // ex: admin: [ 'test/admin.html' ]
+    all: [ 'test/**/!(test2).html' ],
+    
+    // Runs 'test/test2.html' with specified mocha options.
+    // This variant auto-includes 'mocha-helper.js' so you do not have
+    // to include it in your HTML spec file. Instead, you must add an
+    // environment check before you run `mocha.run` in your HTML.
+    test2: {
+
+        // Test files
+        src: [ 'test/test2.html' ],
+
+        // mocha options
+        options: {
+            ignoreLeaks: false,
+            grep: 'food'
+        },
+
+        // Indicates whether 'mocha.run()' should be executed in 
+        // 'mocha-helper.js'
+        run: true
+    }
+}
+```
 
 ### Vanilla JS
 
@@ -17,7 +49,7 @@ For a grunt task for server-side mocha tests, see https://github.com/yaymukund/g
 
 In this case you shouldn't include `mocha-helper.js` (it will be included automatically) and tests will be run from `mocha-helper.js`.
 
-Alternatively, include `mocha-helper.js` from `tasks/mocha` after you include `mocha.js` and run `mocha.setup` in your HTML file. The helper will override `mocha.setup` if it detects PhantomJS. See `exampletest/test.html`.
+Alternatively, include `mocha-helper.js` from `tasks/mocha` after you include `mocha.js` and run `mocha.setup` in your HTML file. The helper will override `mocha.setup` if it detects PhantomJS. See `example/test/test.html`.
 
 ### AMD
 

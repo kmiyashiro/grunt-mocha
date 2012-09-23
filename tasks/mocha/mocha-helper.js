@@ -59,26 +59,32 @@
     
     var phantom = window.PHANTOMJS;
     if (phantom) {
-        var config = {
-              ui: 'bdd',
-              ignoreLeaks: true,
-              reporter: GruntReporter
-            },
-            options = phantom.mocha,
-            key;
-        if (options) {
-          if (typeof options === "string") {
-            config.ui = options;
-          } else {
-            for (key in options) {
-              config[key] = options[key];
-            }
-            config.reporter = GruntReporter;
+      // Default mocha options
+      var config = {
+            ui: 'bdd',
+            ignoreLeaks: true,
+            reporter: GruntReporter
+          },
+          options = phantom.options,
+          key;
+          
+      if (options) {
+        // If options is a string, assume it is to set the UI (bdd/tdd etc)
+        if (typeof options === "string") {
+          config.ui = options;
+        } else {
+          // Extend defaults with passed options
+          for (key in options) {
+            config[key] = options[key];
           }
         }
-        mocha.setup(config);
-        if (phantom.run) {
-          mocha.run();
-        }
+      }
+
+      config.reporter = GruntReporter;
+
+      mocha.setup(config);
+      if (phantom.run) {
+        mocha.run();
+      }
     }
 }());
