@@ -69,8 +69,7 @@
         if (options) {
           if (typeof options === "string") {
             config.ui = options;
-          }
-          else {
+          } else {
             for (key in options) {
               config[key] = options[key];
             }

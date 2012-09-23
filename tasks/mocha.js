@@ -143,14 +143,13 @@ module.exports = function(grunt) {
     // Get files as URLs.
     var urls = file.expandFileURLs(this.file.src);
     // Get additional configuration
-    var config;
+    var config = {};
+    
     if (utils.kindOf(this.data) === 'object') {
       config = utils._.clone(this.data);
       delete config.src;
     }
-    else {
-      config = {};
-    }
+
     var configStr = JSON.stringify(config);
     verbose.writeln('Additional configuration: ' + configStr);
     
@@ -201,9 +200,8 @@ module.exports = function(grunt) {
           if (phantomHandlers[method]) {
             args.shift();
             phantomHandlers[method].apply(null, args);
-          }
-          // Otherwise log read data
-          else {
+          } else {
+            // Otherwise log read data
             verbose.writeln("\n" + args.join(", "));
           }
           // If the method name started with test, return true. Because the
