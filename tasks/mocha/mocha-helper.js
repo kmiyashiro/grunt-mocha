@@ -18,15 +18,7 @@
 
     var GruntReporter = function(runner){
       // 1.4.2 moved reporters to Mocha instead of mocha
-			// Yuck, yuck, yuck, but at least it runs. The try..catch version is even uglier.
-			var reporters;
-			if(typeof Mocha !== "undefined" && Mocha !== null && Mocha.reporters){
-				reporters = Mocha.reporters;
-			} else if (typeof mocha !== "undefined" && mocha !== null && mocha.reporters){
-				reporters = mocha.reporters;
-			} else {
-					throw(new Error("Can't find mocha, no test lovin' tonight. :("));
-			}
+			var reporters = window.Mocha.reporters || window.mocha.reporters;
 
       reporters.HTML.call(this, runner);
 
