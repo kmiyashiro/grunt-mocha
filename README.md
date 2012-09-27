@@ -1,6 +1,6 @@
 Automatically run *client-side* mocha specs via grunt/mocha/PhantomJS
 
-For a grunt task for server-side mocha tests, see https://github.com/yaymukund/grunt-simple-mocha (Warning: These tasks currently share the same task name, we're working on resolving the conflict)
+For a grunt task for server-side mocha tests, see https://github.com/yaymukund/grunt-simple-mocha
 
 # grunt-mocha
 
