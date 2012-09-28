@@ -18,7 +18,13 @@
 
     var GruntReporter = function(runner){
       // 1.4.2 moved reporters to Mocha instead of mocha
-			var reporters = window.Mocha.reporters || window.mocha.reporters;
+			var mochaInstance = window.Mocha || window.mocha;
+
+			if (!mochaInstance) {
+				throw new Error('Mocha was not found, make sure you include Mocha in your HTML spec file.');
+			}
+
+			var reporters = mochaInstance.reporters;
 
       reporters.HTML.call(this, runner);
 
