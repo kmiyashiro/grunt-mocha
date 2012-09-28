@@ -1,3 +1,6 @@
+# 0.1.7
+* Fix bad legacy mocha check for mocha < 1.4.2 (rohni)
+
 # 0.1.6
 * Add ability to pass mocha config options (grep, etc) via grunt task config. (gamtiq)
 * Add option to not include `mocha-spec-helper.js` and auto-inject/run with the `run` config option. Note: Still not required for AMD. This requires an if-statement in your HTML spec to check for PhantomJS environment, it's either that or include the helper. See `example/test2.html`. (gamtiq)

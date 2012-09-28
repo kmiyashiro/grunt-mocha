@@ -1,7 +1,7 @@
 {
   "name": "grunt-mocha",
   "description": "Grunt task for running Mocha specs",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "homepage": "https://github.com/kmiyashiro/grunt-mocha",
   "author": {
     "name": "Kelly Miyashiro",
@@ -24,9 +24,6 @@
   "main": "grunt.js",
   "engines": {
     "node": "*"
-  },
-  "scripts": {
-    "test": "grunt test"
   },
   "dependencies": {
     "temporary": "~0.0.2"
