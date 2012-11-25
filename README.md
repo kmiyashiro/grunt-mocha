@@ -37,7 +37,9 @@ mocha: {
 
         // Indicates whether 'mocha.run()' should be executed in 
         // 'mocha-helper.js'
-        // NOTE: If you use AMD, you should not use this and just add a call to `mocha.run` after you load the specs
+        //
+        // NOTE: If you use AMD, you should not use this and just add a call to 
+        // `mocha.run` after you load the specs
         run: true
     }
 }
