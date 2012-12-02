@@ -3,6 +3,7 @@
 * Uses grunt-lib-phantomjs for easy PhantomJS installation!
 * If things are not working right, try removing and installing via npm again.
 * Config changes required
+    * `tasks/mocha/mocha-helper.js` has been moved to `phantomjs/bridge.js`, if you are including it manually, you must change the path/filename
     * Task options are now nested in the `options` key per task/target
 
 ```js
