@@ -31,24 +31,24 @@
       var stats = this.stats;
 
       runner.on('test', function(test) {
-        sendMessage('testStart', test.title);
+        sendMessage('mocha.testStart', test.title);
       });
 
       runner.on('test end', function(test) {
-        sendMessage('testDone', test.title, test.state);
+        sendMessage('mocha.testDone', test.title, test.state);
       });
 
       runner.on('suite', function(suite) {
-        sendMessage('suiteStart', suite.title);
+        sendMessage('mocha.suiteStart', suite.title);
       });
 
       runner.on('suite end', function(suite) {
         if (suite.root) return;
-        sendMessage('suiteDone', suite.title);
+        sendMessage('mocha.suiteDone', suite.title);
       });
 
       runner.on('fail', function(test, err) {
-        sendMessage('testFail', test.title, err);
+        sendMessage('mocha.testFail', test.title, err);
       });
 
       runner.on('end', function() {
@@ -59,7 +59,7 @@
           passed    = this.total - this.failures,
           total     = this.total;
 
-        sendMessage('done', failed, passed, total, time);
+        sendMessage('mocha.done', failed, passed, total, time);
       });
     };
 
@@ -89,6 +89,8 @@
       config.reporter = GruntReporter;
 
       mocha.setup(config);
+
+      // task option `run`, automatically runs
       if (phantom.run) {
         mocha.run();
       }

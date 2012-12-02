@@ -12,38 +12,30 @@
  * http://benalman.com/about/license/
  */
 
+ 'use strict';
+
 module.exports = function(grunt) {
-  // Grunt utilities.
-  var task = grunt.task;
-  var file = grunt.file;
-  var utils = grunt.utils;
-  var log = grunt.log;
-  var verbose = grunt.verbose;
-  var fail = grunt.fail;
-  var option = grunt.option;
-  var config = grunt.config;
-  var template = grunt.template;
-  
   // Nodejs libs.
-  var fs = require('fs');
   var path = require('path');
 
-  // External libs.
-  var Tempfile = require('temporary/lib/file');
-  var growl;
+  // External lib.
+  var phantomjs = require('grunt-lib-phantomjs').init(grunt);
   
   // Growl is optional
   try {
     growl = require('growl');
   } catch(e) {
     growl = function(){};
-    verbose.write('Growl not found, npm install growl for Growl support');
+    grunt.verbose.write('Growl not found, npm install growl for Growl support');
   }
 
   // Keep track of the last-started module, test and status.
   var currentModule, currentTest, status;
   // Keep track of the last-started test(s).
   var unfinished = {};
+
+  // Get an asset file, local to the root of the project.
+  var asset = path.join.bind(null, __dirname, '..');
 
   // Allow an error message to retain its color when split across multiple lines.
   function formatMessage(str) {
@@ -56,89 +48,109 @@ module.exports = function(grunt) {
     var assertion;
     // Print each assertion error.
     while (assertion = failedAssertions.shift()) {
-      verbose.or.error(assertion.testName);
-      log.error('Message: ' + formatMessage(assertion.message));
+      grunt.verbose.or.error(assertion.testName);
+      grunt.log.error('Message: ' + formatMessage(assertion.message));
       if (assertion.actual !== assertion.expected) {
-        log.error('Actual: ' + formatMessage(assertion.actual));
-        log.error('Expected: ' + formatMessage(assertion.expected));
+        grunt.log.error('Actual: ' + formatMessage(assertion.actual));
+        grunt.log.error('Expected: ' + formatMessage(assertion.expected));
       }
       if (assertion.source) {
-        log.error(assertion.source.replace(/ {4}(at)/g, '  $1'));
+        grunt.log.error(assertion.source.replace(/ {4}(at)/g, '  $1'));
       }
-      log.writeln();
+      grunt.log.writeln();
     }
   }
 
-  // Handle methods passed from PhantomJS, including Mocha hooks.
-  var phantomHandlers = {
-    // Mocha hooks.
-    suiteStart: function(name) {
-      unfinished[name] = true;
-      currentModule = name;
-    },
-    suiteDone: function(name, failed, passed, total) {
-      delete unfinished[name];
-    },
-    testStart: function(name) {
-      currentTest = (currentModule ? currentModule + ' - ' : '') + name;
-      verbose.write(currentTest + '...');
-    },
-    testFail: function(name, result) {
-        result.testName = currentTest;
-        failedAssertions.push(result);
-    },
-    testDone: function(title, state) {
-      // Log errors if necessary, otherwise success.
-      if (state == 'failed') {
-        // list assertions
-        if (option('verbose')) {
-          log.error();
-          logFailedAssertions();
-        } else {
-          log.write('F'.red);
-        }
+  // Mocha hooks.
+  phantomjs.on('mocha.suiteStart', function(name) {
+    unfinished[name] = true;
+    currentModule = name;
+  });
+
+  phantomjs.on('mocha.suiteDone', function(name, failed, passed, total) {
+    delete unfinished[name];
+  });
+
+  phantomjs.on('mocha.testStart', function(name) {
+    currentTest = (currentModule ? currentModule + ' - ' : '') + name;
+    grunt.verbose.write(currentTest + '...');
+  });
+
+  phantomjs.on('mocha.testFail', function(name, result) {
+      result.testName = currentTest;
+      failedAssertions.push(result);
+  });
+
+  phantomjs.on('mocha.testDone', function(title, state) {
+    // Log errors if necessary, otherwise success.
+    if (state == 'failed') {
+      // list assertions
+      if (option('verbose')) {
+        grunt.log.error();
+        logFailedAssertions();
       } else {
-        verbose.ok().or.write('.');
+        grunt.log.write('F'.red);
       }
-    },
-    done: function(failed, passed, total, duration) {
-      var nDuration = parseFloat(duration) || 0;
-      status.failed += failed;
-      status.passed += passed;
-      status.total += total;
-      status.duration += Math.round(nDuration*100)/100;
-      // Print assertion errors here, if verbose mode is disabled.
-      if (!option('verbose')) {
-        if (failed > 0) {
-          log.writeln();
-          logFailedAssertions();
-        } else {
-          log.ok();
-        }
+    } else {
+      verbose.ok().or.write('.');
+    }
+  });
+
+  phantomjs.on('mocha.done', function(failed, passed, total, duration) {
+    var nDuration = parseFloat(duration) || 0;
+    status.failed += failed;
+    status.passed += passed;
+    status.total += total;
+    status.duration += Math.round(nDuration*100)/100;
+    // Print assertion errors here, if verbose mode is disabled.
+    if (!option('verbose')) {
+      if (failed > 0) {
+        grunt.log.writeln();
+        logFailedAssertions();
+      } else {
+        grunt.log.ok();
       }
-    },
-    // Error handlers.
-    done_fail: function(url) {
-      verbose.write('Running PhantomJS...').or.write('...');
-      log.error();
-      grunt.warn('PhantomJS unable to load "' + url + '" URI.', 90);
-    },
-    done_timeout: function() {
-      log.writeln();
-      grunt.warn('PhantomJS timed out, possibly due to a missing Mocha run() call.', 90);
-    },
-    
-    // console.log pass-through.
-    // console: console.log.bind(console),
-    // Debugging messages.
-    debug: log.debug.bind(log, 'phantomjs')
-  };
+    }
+  });
+
+  // Re-broadcast qunit events on grunt.event.
+  phantomjs.on('mocha.*', function() {
+    var args = [this.event].concat(grunt.util.toArray(arguments));
+    grunt.event.emit.apply(grunt.event, args);
+  });
+
+  // Built-in error handlers.
+  phantomjs.on('fail.load', function(url) {
+    grunt.verbose.write('Running PhantomJS...').or.write('...');
+    grunt.log.error();
+    grunt.warn('PhantomJS unable to load "' + url + '" URI.', 90);
+  });
+
+  phantomjs.on('fail.timeout', function() {
+    grunt.log.writeln();
+    grunt.warn('PhantomJS timed out, possibly due to a missing Mocha run() call.', 90);
+  });
+
+  
+  // console.log pass-through.
+  phantomjs.on('console', console.log.bind(console));
+
+  // Debugging messages.
+  // phantomjs.on('debug', grunt.log.debug.bind(log, 'phantomjs')
 
   // ==========================================================================
   // TASKS
   // ==========================================================================
 
   grunt.registerMultiTask('mocha', 'Run Mocha unit tests in a headless PhantomJS instance.', function() {
+    // Merge task-specific and/or target-specific options with these defaults.
+    var options = this.options({
+      // Default PhantomJS timeout.
+      timeout: 5000,
+      // Mocha-PhantomJS bridge file to be injected.
+      inject: asset('phantomjs/bridge.js'),
+    });
+
     // Get files as URLs.
     var urls = file.expandFileURLs(this.file.src);
     // Get additional configuration
@@ -150,7 +162,7 @@ module.exports = function(grunt) {
     }
 
     var configStr = JSON.stringify(config);
-    verbose.writeln('Additional configuration: ' + configStr);
+    grunt.verbose.writeln('Additional configuration: ' + configStr);
     
     // This task is asynchronous.
     var done = this.async();
@@ -163,13 +175,6 @@ module.exports = function(grunt) {
       var basename = path.basename(url);
       verbose.subhead('Testing ' + basename).or.write('Testing ' + basename);
 
-      // Create temporary file to be used for grunt-phantom communication.
-      var tempfile = new Tempfile();
-      // Timeout ID.
-      var id;
-      // The number of tempfile lines already read.
-      var n = 0;
-
       // Reset current module.
       currentModule = null;
 
@@ -179,80 +184,30 @@ module.exports = function(grunt) {
         tempfile.unlink();
       }
 
-      // It's simple. As Mocha tests, assertions and modules begin and complete,
-      // the results are written as JSON to a temporary file. This polling loop
-      // checks that file for new lines, and for each one parses its JSON and
-      // executes the corresponding method with the specified arguments.
-      (function loopy() {
-        // Disable logging temporarily.
-        log.muted = true;
-        // Read the file, splitting lines on \n, and removing a trailing line.
-        var lines = file.read(tempfile.path).split('\n').slice(0, -1);
-        // Re-enable logging.
-        log.muted = false;
-        // Iterate over all lines that haven't already been processed.
-        var done = lines.slice(n).some(function(line) {
-          // Get args and method.
-          var args = JSON.parse(line);
-          var method = args[0];
-          // Execute method if it exists.
-          if (phantomHandlers[method]) {
-            args.shift();
-            phantomHandlers[method].apply(null, args);
-          } else {
-            // Otherwise log read data
-            verbose.writeln("\n" + args.join(", "));
-          }
-          // If the method name started with test, return true. Because the
-          // Array#some method was used, this not only sets "done" to true,
-          // but stops further iteration from occurring.
-          return (/^done/).test(method);
-        });
-
-        if (done) {
-          // All done.
-          cleanup();
-          next();
-        } else {
-          // Update n so previously processed lines are ignored.
-          n = lines.length;
-          // Check back in a little bit.
-          id = setTimeout(loopy, 100);
-        }
-      }());
-
       // Launch PhantomJS.
-      grunt.helper('phantomjs', {
-        code: 90,
-        args: [
-          // The main script file.
-          task.getFile('mocha/phantom-mocha-runner.js'),
-          // The temporary file used for communications.
-          tempfile.path,
-          // The Mocha helper file to be injected.
-          // task.getFile('../test/run-mocha.js'),
-          task.getFile('mocha/mocha-helper.js'),
-          // URL to the Mocha .html test file to run.
-          url,
-          // Additional configuration
-          configStr,
-          // PhantomJS options.
-          '--config=' + task.getFile('mocha/phantom.json')
-        ],
+      phantomjs.spawn(url, {
+        // Exit code to use if PhantomJS fails in an uncatchable way.
+        failCode: 90,
+        // Additional PhantomJS options.
+        options: options,
+        // Do stuff when done.
         done: function(err) {
           if (err) {
-            cleanup();
+            // If there was an error, abort the series.
             done();
+          } else {
+            // Otherwise, process next url.
+            next();
           }
         },
       });
-    }, function(err) {
-      // All tests have been run.
-
+    },
+    // All tests have been run.
+    function() {
       // Log results.
       if (status.failed > 0) {
         growl(status.failed + ' of ' + status.total + ' tests failed!', {
-          image: __dirname + '/mocha/error.png',
+          image: asset('growl/error.png'),
           title: 'Tests Failed',
           priority: 3
         });
@@ -261,46 +216,14 @@ module.exports = function(grunt) {
       } else {
         growl('All Clear: ' + status.total + ' tests passed', {
           title: 'Tests Passed',
-          image: __dirname + '/mocha/ok.png'
+          image: asset('growl/ok.png')
         });
-        verbose.writeln();
-        log.ok(status.total + ' assertions passed (' + status.duration + 's)');
+        grunt.verbose.writeln();
+        grunt.log.ok(status.total + ' assertions passed (' + status.duration + 's)');
       }
 
       // All done!
       done();
     });
   });
-
-  // ==========================================================================
-  // HELPERS
-  // ==========================================================================
-
-  grunt.registerHelper('phantomjs', function(options) {
-    return utils.spawn({
-      cmd: 'phantomjs',
-      args: options.args
-    }, function(err, result, code) {
-      if (!err) { return options.done(null); }
-      // Something went horribly wrong.
-      verbose.or.writeln();
-      log.write('Running PhantomJS...').error();
-      if (code === 127) {
-        log.errorlns(
-          'In order for this task to work properly, PhantomJS must be ' +
-          'installed and in the system PATH (if you can run "phantomjs" at' +
-          ' the command line, this task should work). Unfortunately, ' +
-          'PhantomJS cannot be installed automatically via npm or grunt. ' +
-          'See the grunt FAQ for PhantomJS installation instructions: ' +
-          'https://github.com/cowboy/grunt/blob/master/docs/faq.md'
-        );
-        grunt.warn('PhantomJS not found.', options.code);
-      } else {
-        result.split('\n').forEach(log.error, log);
-        grunt.warn('PhantomJS exited unexpectedly with exit code ' + code + '.', options.code);
-      }
-      options.done(code);
-    });
-  });
-
 };
