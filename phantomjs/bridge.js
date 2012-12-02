@@ -58,20 +58,19 @@
         var failed  = this.failures,
           passed    = this.total - this.failures,
           total     = this.total;
-
         sendMessage('mocha.done', failed, passed, total, time);
       });
     };
 
-    var phantom = window.PHANTOMJS;
-    if (phantom) {
+    var options = window.PHANTOMJS;
+    if (options) {
       // Default mocha options
       var config = {
             ui: 'bdd',
             ignoreLeaks: true,
             reporter: GruntReporter
           },
-          options = phantom.options,
+          run = options.run,
           key;
 
       if (options) {
@@ -80,7 +79,7 @@
           config.ui = options;
         } else {
           // Extend defaults with passed options
-          for (key in options) {
+          for (key in options.mocha) {
             config[key] = options[key];
           }
         }
@@ -90,8 +89,8 @@
 
       mocha.setup(config);
 
-      // task option `run`, automatically runs
-      if (phantom.run) {
+      // task option `run`, automatically runs mocha for grunt only
+      if (run) {
         mocha.run();
       }
     }

@@ -25,6 +25,9 @@
   "engines": {
     "node": "*"
   },
+  "scripts": {
+    "test": "./node_modules/.bin/grunt test"
+  },
   "dependencies": {
     "grunt-lib-phantomjs": "~0.1.0"
   },

@@ -18,13 +18,11 @@
     
     <!--
          IMPORTANT
-         If you are not using AMD, you must include the mocha-helper.js file
-         included in the tasks/mocha folder after you include mocha.js
-         
-         Unfortunately, I can't figure out a reliable way to inject the grunt
-         runner after mocha.js but before mocha.run in PhantomJS
+         If you do not want to set the `run` option to `true` for some reason
+         and are not using AMD, you must include the bridge.js file
+         in the `phantomjs` folder after you include `mocha.js`
     -->
-    <script src="../../tasks/mocha/mocha-helper.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../phantomjs/bridge.js" type="text/javascript" charset="utf-8"></script>
     
     <!-- Include your assertion lib of choice -->
     <script src="js/chai.js" type="text/javascript" charset="utf-8"></script>

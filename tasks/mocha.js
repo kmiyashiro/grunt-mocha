@@ -21,6 +21,7 @@ module.exports = function(grunt) {
   // External lib.
   var phantomjs = require('grunt-lib-phantomjs').init(grunt);
   
+  var growl;
   // Growl is optional
   try {
     growl = require('growl');
@@ -85,25 +86,26 @@ module.exports = function(grunt) {
     // Log errors if necessary, otherwise success.
     if (state == 'failed') {
       // list assertions
-      if (option('verbose')) {
+      if (grunt.option('verbose')) {
         grunt.log.error();
         logFailedAssertions();
       } else {
         grunt.log.write('F'.red);
       }
     } else {
-      verbose.ok().or.write('.');
+      grunt.verbose.ok().or.write('.');
     }
   });
 
   phantomjs.on('mocha.done', function(failed, passed, total, duration) {
+    phantomjs.halt();
     var nDuration = parseFloat(duration) || 0;
     status.failed += failed;
     status.passed += passed;
     status.total += total;
     status.duration += Math.round(nDuration*100)/100;
     // Print assertion errors here, if verbose mode is disabled.
-    if (!option('verbose')) {
+    if (!grunt.option('verbose')) {
       if (failed > 0) {
         grunt.log.writeln();
         logFailedAssertions();
@@ -149,20 +151,15 @@ module.exports = function(grunt) {
       timeout: 5000,
       // Mocha-PhantomJS bridge file to be injected.
       inject: asset('phantomjs/bridge.js'),
+      // Main PhantomJS script file
+      main: asset('phantomjs/main.js')
     });
 
-    // Get files as URLs.
-    var urls = file.expandFileURLs(this.file.src);
-    // Get additional configuration
-    var config = {};
-    
-    if (utils.kindOf(this.data) === 'object') {
-      config = utils._.clone(this.data);
-      delete config.src;
-    }
-
-    var configStr = JSON.stringify(config);
+    var configStr = JSON.stringify(options);
     grunt.verbose.writeln('Additional configuration: ' + configStr);
+
+    // Get files as URLs.
+    var urls = grunt.file.expandFileURLs(this.file.srcRaw);
     
     // This task is asynchronous.
     var done = this.async();
@@ -171,18 +168,12 @@ module.exports = function(grunt) {
     status = {failed: 0, passed: 0, total: 0, duration: 0};
 
     // Process each filepath in-order.
-    utils.async.forEachSeries(urls, function(url, next) {
+    grunt.util.async.forEachSeries(urls, function(url, next) {
       var basename = path.basename(url);
-      verbose.subhead('Testing ' + basename).or.write('Testing ' + basename);
+      grunt.verbose.subhead('Testing ' + basename).or.write('Testing ' + basename);
 
       // Reset current module.
       currentModule = null;
-
-      // Clean up.
-      function cleanup() {
-        clearTimeout(id);
-        tempfile.unlink();
-      }
 
       // Launch PhantomJS.
       phantomjs.spawn(url, {

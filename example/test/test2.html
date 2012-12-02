@@ -34,6 +34,7 @@
     <!-- run mocha -->
     <script type="text/javascript" charset="utf-8">
         // If tests run in a real browser
+        // Can alternatively do a check on window.PHANTOMJS
         if (navigator.userAgent.indexOf('PhantomJS') < 0) {
             mocha
                 // .globals(['Wombat', 'Apple']) // acceptable globals
