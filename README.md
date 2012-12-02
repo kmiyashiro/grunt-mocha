@@ -1,3 +1,5 @@
+**0.4.0 migration details in [HISTORY.md](/kmiyashiro/grunt-mocha/blob/devel/HISTORY.md)**
+
 Automatically run *client-side* mocha specs via grunt/mocha/PhantomJS
 
 For a grunt task for server-side mocha tests, see https://github.com/yaymukund/grunt-simple-mocha
