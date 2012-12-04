@@ -104,6 +104,8 @@ page.onError = function(msg, trace) {
 // Run before the page is loaded.
 page.onInitialized = function() {
   sendMessage('onInitialized');
+
+  // Customization for mocha, passing mocha options from task config
   page.evaluate(function(options) {
     window.PHANTOMJS = options;
   }, options);
