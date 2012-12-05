@@ -29,7 +29,7 @@
     "test": "./node_modules/.bin/grunt test"
   },
   "dependencies": {
-    "grunt-lib-phantomjs": "~0.1.0"
+    "grunt-lib-phantomjs": "https://github.com/kmiyashiro/grunt-lib-phantomjs/tarball/master"
   },
   "devDependencies": {
     "grunt": "~0.4.0a",
