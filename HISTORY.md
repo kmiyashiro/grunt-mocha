@@ -1,5 +1,5 @@
 # 0.2.0
-* **Grunt >=0.4.0 only, MIGRATION REQUIRED if updating**
+* **Grunt >=0.4.0 only, MIGRATION REQUIRED if updating from 0.1.x**
 * Uses grunt-lib-phantomjs for easy PhantomJS installation!
 * If things are not working right, try removing and installing via npm again.
 * Config changes required

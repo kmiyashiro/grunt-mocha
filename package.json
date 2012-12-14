@@ -1,6 +1,6 @@
 {
   "name": "grunt-mocha",
-  "description": "Grunt task for running Mocha specs",
+  "description": "Grunt task for running client-side Mocha specs in PhantomJS",
   "version": "0.2.0",
   "homepage": "https://github.com/kmiyashiro/grunt-mocha",
   "author": {
@@ -29,7 +29,7 @@
     "test": "./node_modules/.bin/grunt test"
   },
   "dependencies": {
-    "grunt-lib-phantomjs": "https://github.com/kmiyashiro/grunt-lib-phantomjs/tarball/master"
+    "grunt-lib-phantomjs": "~0.1"
   },
   "devDependencies": {
     "grunt": "~0.4.0a",
