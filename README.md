@@ -23,38 +23,42 @@ mocha: {
     all: [ 'test/**/!(test2).html' ],
     
     // Runs 'test/test2.html' with specified mocha options.
-    // This variant auto-includes 'mocha-helper.js' so you do not have
+    // This variant auto-includes 'bridge.js' so you do not have
     // to include it in your HTML spec file. Instead, you must add an
     // environment check before you run `mocha.run` in your HTML.
     test2: {
 
         // Test files
-        src: [ 'test/test2.html' ],
-
-        // mocha options
+        src: [ 'example/test/test2.html' ],
         options: {
-            ignoreLeaks: false,
-            grep: 'food'
-        },
+            // mocha options
+            mocha: {
+                ignoreLeaks: false,
+                grep: 'food'
+            },
 
-        // Indicates whether 'mocha.run()' should be executed in 
-        // 'mocha-helper.js'
-        //
-        // NOTE: If you use AMD, you should not use this and just add a call to 
-        // `mocha.run` after you load the specs
-        run: true
+            // Indicates whether 'mocha.run()' should be executed in 
+            // 'bridge.js'. If you include `mocha.run()` in your html spec, you
+            // must wrap it in a conditional check to not run if it is opened
+            // in PhantomJS, see example/test/test2.html
+            run: true
+        }
     }
 }
 ```
 
 ### Vanilla JS
 
-- Write mocha task description in grunt config using full format and specify `run: true` option (see `example/grunt.js` for details);
+#### Option 1 (recommended)
+
+- Write mocha task description in grunt config using and specify `run: true` option (see `example/grunt.js` for details);
 - Check for PhantomJS `userAgent` in a test html file and run tests only in a real browser (see `example/test/test2.html` for details).
 
-In this case you shouldn't include `mocha-helper.js` (it will be included automatically) and tests will be run from `mocha-helper.js`.
+In this case you shouldn't include `bridge.js` (it will be included automatically) and tests will be run from `bridge.js`.
 
-Alternatively, include `mocha-helper.js` from `tasks/mocha` after you include `mocha.js` and run `mocha.setup` in your HTML file. The helper will override `mocha.setup` if it detects PhantomJS. See `example/test/test.html`.
+#### Option 2
+
+Alternatively, include `bridge.js` from `tasks/phantomjs` after you include `mocha.js` and run `mocha.setup` in your HTML file. The helper will override `mocha.setup` if it detects PhantomJS. See `example/test/test.html`.
 
 ### AMD
 
@@ -72,7 +76,7 @@ Then add this line to your project's `grunt.js` gruntfile at the bottom:
 grunt.loadNpmTasks('grunt-mocha');
 ```
 
-Also add this to the ```grunt.initConfig``` object in the same file:
+Also add this to the `grunt.initConfig` object in the same file:
 
 ```javascript
 mocha: {
@@ -80,7 +84,7 @@ mocha: {
 },
 ```
 
-Replace ```specs/index.html``` with the location of your mocha spec running html file.
+Replace `specs/index.html` with the location of your mocha spec running html file.
 
 Now you can run the mocha task with `grunt mocha`, but it won't work. That's because you need...
 
