@@ -152,7 +152,7 @@ module.exports = function(grunt) {
       // Mocha-PhantomJS bridge file to be injected.
       inject: asset('phantomjs/bridge.js'),
       // Main PhantomJS script file
-      main: asset('phantomjs/main.js')
+      phantomScript: asset('phantomjs/main.js')
     });
 
     var configStr = JSON.stringify(options);
