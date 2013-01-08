@@ -64,6 +64,8 @@ Alternatively, include `bridge.js` from `tasks/phantomjs` after you include `moc
 
 ### AMD
 
+Mocha **must** be included via script tag in the header. There is no need to load Mocha via AMD. You may load other testing libs via AMD if that gives you a fuzzy feeling.
+
 Example setup with AMD (advanced): https://gist.github.com/2655876
 
 ### Grunt and this plugin
