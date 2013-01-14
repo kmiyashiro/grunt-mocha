@@ -159,7 +159,7 @@ module.exports = function(grunt) {
     grunt.verbose.writeln('Additional configuration: ' + configStr);
 
     // Get files as URLs.
-    var urls = grunt.file.expandFileURLs(this.file.srcRaw);
+    var urls = this.filesSrc;
     
     // This task is asynchronous.
     var done = this.async();
