@@ -21,7 +21,7 @@
       "url": "https://github.com/kmiyashiro/grunt-mocha/blob/master/LICENSE-MIT"
     }
   ],
-  "main": "grunt.js",
+  "main": "tasks/mocha.js",
   "engines": {
     "node": "*"
   },
