@@ -5,6 +5,11 @@
 'use strict';
 
 module.exports = function(grunt) {
+
+    var port = 8981;
+
+    grunt.loadNpmTasks('grunt-contrib-connect');
+
     grunt.initConfig({
         watch: {
             // If you want to watch files and run tests automatically on change
@@ -39,7 +44,35 @@ module.exports = function(grunt) {
                     // 'bridge.js'
                     run: true
                 }
+            },
+
+            // Runs the same as test2 but with URL's
+            test3: {
+
+                // Test files
+                options: {
+                    // mocha options
+                    mocha: {
+                        ignoreLeaks: false,
+                        grep: 'food'
+                    },
+
+                    // URLs passed through as options
+                    urls: [ 'http://localhost:' + port + '/example/test/test2.html' ],
+
+                    // Indicates whether 'mocha.run()' should be executed in 
+                    // 'bridge.js'
+                    run: true
+                }
             }
+        },
+        connect: {
+            server: {
+                options: {
+                    port: port,
+                    base: '.' 
+                }   
+            }   
         }
     });
     
@@ -51,7 +84,7 @@ module.exports = function(grunt) {
     // grunt.loadNpmTasks('grunt-mocha');
 
     // Alias 'test' to 'mocha' so you can run `grunt test`
-    grunt.task.registerTask('test', ['mocha']);
+    grunt.task.registerTask('test', ['connect', 'mocha']);
     
     // Default task.
     grunt.task.registerTask('default', 'mocha');
