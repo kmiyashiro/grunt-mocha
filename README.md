@@ -45,6 +45,26 @@ mocha: {
             // in PhantomJS, see example/test/test2.html
             run: true
         }
+    },
+
+    // Runs the same as test2 but with URL's
+    test3: {
+
+        // Test files
+        options: {
+            // mocha options
+            mocha: {
+                ignoreLeaks: false,
+                grep: 'food'
+            },
+
+            // URLs passed through as options
+            urls: [ 'http://localhost:' + port + '/example/test/test2.html' ],
+
+            // Indicates whether 'mocha.run()' should be executed in 
+            // 'bridge.js'
+            run: true
+        }
     }
 }
 ```
