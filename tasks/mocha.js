@@ -152,14 +152,16 @@ module.exports = function(grunt) {
       // Mocha-PhantomJS bridge file to be injected.
       inject: asset('phantomjs/bridge.js'),
       // Main PhantomJS script file
-      phantomScript: asset('phantomjs/main.js')
+      phantomScript: asset('phantomjs/main.js'),
+      // Explicit non-file URLs to test.
+      urls: []
     });
 
     var configStr = JSON.stringify(options);
     grunt.verbose.writeln('Additional configuration: ' + configStr);
 
-    // Get files as URLs.
-    var urls = this.filesSrc;
+    // Combine any specified URLs with src files.
+    var urls = options.urls.concat(this.filesSrc);
     
     // This task is asynchronous.
     var done = this.async();
