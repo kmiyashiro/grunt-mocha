@@ -123,12 +123,14 @@ module.exports = function(grunt) {
 
   // Built-in error handlers.
   phantomjs.on('fail.load', function(url) {
+    phantomjs.halt();
     grunt.verbose.write('Running PhantomJS...').or.write('...');
     grunt.log.error();
     grunt.warn('PhantomJS unable to load "' + url + '" URI.', 90);
   });
 
   phantomjs.on('fail.timeout', function() {
+    phantomjs.halt();
     grunt.log.writeln();
     grunt.warn('PhantomJS timed out, possibly due to a missing Mocha run() call.', 90);
   });
