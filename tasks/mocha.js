@@ -84,7 +84,7 @@ module.exports = function(grunt) {
 
   phantomjs.on('mocha.testDone', function(title, state) {
     // Log errors if necessary, otherwise success.
-    if (state == 'failed') {
+    if (state === 'failed') {
       // list assertions
       if (grunt.option('verbose')) {
         grunt.log.error();
