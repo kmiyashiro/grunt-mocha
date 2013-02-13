@@ -1,0 +1,7 @@
+v0.2.2:
+  date: 2013-02-04
+    changes:
+      - Updating grunt/gruntplugin dependencies to rc6.
+      - Added travis.yml
+      - Added .jshintrc and jshint to Gruntfile.js
+      - Migrated documentation and Gruntfile.js to grunt-contrib standards
