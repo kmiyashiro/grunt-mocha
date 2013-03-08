@@ -80,7 +80,7 @@
         } else {
           // Extend defaults with passed options
           for (key in options.mocha) {
-            config[key] = options[key];
+            config[key] = options.mocha[key];
           }
         }
       }
