@@ -29,16 +29,14 @@
     "test": "./node_modules/.bin/grunt test"
   },
   "dependencies": {
-    "grunt-lib-phantomjs": "0.2.0"
+    "grunt-lib-phantomjs": "~0.2",
+    "mocha": "~1.8",
+    "lodash": "~1.0"
   },
   "devDependencies": {
-    "grunt": "~0.4.0",
-    "grunt-contrib-connect": "~0.1",
-    "grunt-contrib-internal": "*",
-    "grunt-contrib-jshint": "~0.1.0"
-  },
-  "optionalDependencies": {
-    "growl": "~1"
+    "grunt": "~0.4",
+    "grunt-contrib-connect": "~0.2",
+    "grunt-contrib-jshint": "~0.3"
   },
   "keywords": [
     "gruntplugin mocha test phantomjs"

@@ -39,6 +39,9 @@ mocha: {
                 grep: 'food'
             },
 
+            // Select a Mocha reporter - http://visionmedia.github.com/mocha/#reporters
+            reporter: 'Nyan',
+
             // Indicates whether 'mocha.run()' should be executed in 
             // 'bridge.js'. If you include `mocha.run()` in your html spec, you
             // must wrap it in a conditional check to not run if it is opened
@@ -119,10 +122,6 @@ This task is for running Mocha tests in a headless browser, PhantomJS. [See the 
 ### Mocha
 
 Use [Mocha](http://visionmedia.github.com/mocha/)
-
-### Maybe Growl?
-
-Growl support is optional. I'm not sure what the Windows situation is with growl.
 
 ### Hacks
 

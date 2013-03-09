@@ -7,13 +7,31 @@
  * http://benalman.com/about/license/
  */
 
-/*global mocha:true, alert:true*/
+/*global mocha:true, alert:true, window:true */
 
 (function() {
     // Send messages to the parent phantom.js process via alert! Good times!!
     function sendMessage() {
       var args = [].slice.call(arguments);
       alert(JSON.stringify(args));
+    }
+
+    // Create a listener who'll bubble events from Phantomjs to Grunt
+    function createGruntListener(ev, runner) {
+
+      runner.on(ev, function(test, err) {
+        var data = {
+          err: err
+        };
+
+        if (test) {
+          data.title = test.title;
+          data.fullTitle = test.fullTitle();
+        }
+
+        sendMessage('mocha.' + ev, data);
+
+      });
     }
 
     var GruntReporter = function(runner){
@@ -24,42 +42,26 @@
         throw new Error('Mocha was not found, make sure you include Mocha in your HTML spec file.');
       }
 
-      var reporters = mochaInstance.reporters;
+      // Setup HTML reporter to output data on the screen
+      mochaInstance.reporters.HTML.call(this, runner);
 
-      reporters.HTML.call(this, runner);
+      // Create a Grunt listener for each Mocha events
+      var events = [
+        'start',
+        'test',
+        'test end',
+        'suite',
+        'suite end',
+        'fail',
+        'pass',
+        'pending',
+        'end'
+      ];
 
-      var stats = this.stats;
+      for(var i = 0; i < events.length; i++) {
+        createGruntListener(events[i], runner);
+      }
 
-      runner.on('test', function(test) {
-        sendMessage('mocha.testStart', test.title);
-      });
-
-      runner.on('test end', function(test) {
-        sendMessage('mocha.testDone', test.title, test.state);
-      });
-
-      runner.on('suite', function(suite) {
-        sendMessage('mocha.suiteStart', suite.title);
-      });
-
-      runner.on('suite end', function(suite) {
-        if (suite.root) return;
-        sendMessage('mocha.suiteDone', suite.title);
-      });
-
-      runner.on('fail', function(test, err) {
-        sendMessage('mocha.testFail', test.title, err);
-      });
-
-      runner.on('end', function() {
-        var time = new Date() - stats.start;
-        time = (time / 1000).toFixed(2);
-
-        var failed  = this.failures,
-          passed    = this.total - this.failures,
-          total     = this.total;
-        sendMessage('mocha.done', failed, passed, total, time);
-      });
     };
 
     var options = window.PHANTOMJS;
