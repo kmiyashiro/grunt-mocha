@@ -1,6 +1,6 @@
 # This is for Grunt 0.4.x, if you are using Grunt 0.3.x, use grunt-mocha 0.1.x.
 
-**0.4.0 migration details in [HISTORY.md](/kmiyashiro/grunt-mocha/blob/devel/HISTORY.md#020)**
+**0.4.0 migration details in [HISTORY.md](HISTORY.md#020)**
 
 Automatically run *client-side* mocha specs via grunt/mocha/PhantomJS
 
