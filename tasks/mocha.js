@@ -20,10 +20,19 @@ module.exports = function(grunt) {
   var EventEmitter = require('events').EventEmitter;
 
   // External lib.
-  var _ = require('lodash');
+  var _ = grunt.util._;
   var phantomjs = require('grunt-lib-phantomjs').init(grunt);
   var reporters = require('mocha').reporters;
   var reporter;
+
+  // Growl is optional
+  var growl;
+  try {
+    growl = require('growl');
+  } catch(e) {
+    growl = function(){};
+    grunt.verbose.write('Growl not found, \'npm install growl\' for Growl support');
+  }
 
   // Get an asset file, local to the root of the project.
   var asset = path.join.bind(null, __dirname, '..');
@@ -140,7 +149,7 @@ module.exports = function(grunt) {
       // Set Mocha reporter
       var Reporter = reporters[options.reporter];
       if (Reporter == null) {
-        grunt.fail.fatal('Reporter specified is unknown');
+        grunt.fatal('Reporter specified is unknown');
       }
       reporter = new Reporter(runner);
 
@@ -152,14 +161,32 @@ module.exports = function(grunt) {
         options: PhantomjsOptions,
         // Do stuff when done.
         done: function(err) {
+          var stats = runner.stats;
+
           if (err) {
+            // Show Growl notice
+            // @TODO: Get an example of this
+            // growl('PhantomJS Error!');
+            
             // If there was an error, abort the series.
-            grunt.fail.fatal(err);
+            grunt.fatal(err);
             done();
           } else {
-            if (runner.stats.failures > 0) {
-              grunt.fail.warn('An error occured in your tests');
+            // If failures, fail and show growl notice
+            if (stats.failures > 0) {
+              var duration = (stats.end - stats.start) + 'ms';
+              var failMsg = stats.failures + '/' + stats.tests + ' tests failed (' + duration + ')';
+
+              // Show Growl notice, if avail
+              growl(failMsg, {
+                image: asset('growl/error.png'),
+                title: 'Failure in ' + grunt.task.current.target,
+                priority: 3
+              });
+
+              grunt.warn(failMsg);
             }
+
             // Otherwise, process next url.
             next();
           }
