@@ -8,11 +8,11 @@
 sampleTest: {
     src: ['test.js'],
     options: {
+        reporter: 'Nyan'
         mocha: {
             ui: 'tdd'
         }
-    },
-    reporter: 'Nyan'
+    }
 }
 ```
 
