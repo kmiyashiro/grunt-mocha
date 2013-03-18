@@ -15,12 +15,13 @@
 'use strict';
 
 module.exports = function(grunt) {
+  var _ = grunt.util._;
+
   // Nodejs libs.
   var path = require('path');
   var EventEmitter = require('events').EventEmitter;
 
   // External lib.
-  var _ = grunt.util._;
   var phantomjs = require('grunt-lib-phantomjs').init(grunt);
   var reporters = require('mocha').reporters;
   var reporter;
