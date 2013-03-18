@@ -8,8 +8,6 @@ module.exports = function(grunt) {
 
   var port = 8981;
 
-  grunt.loadNpmTasks('grunt-contrib-connect');
-
   grunt.initConfig({
     jshint: {
       all: [
@@ -22,8 +20,14 @@ module.exports = function(grunt) {
     watch: {
       // If you want to watch files and run tests automatically on change
       test: {
-        files: ['example/js/**/*.js', 'example/test/spec/**/*.js'],
-        tasks: 'mocha'
+        files: [
+          'example/js/**/*.js',
+          'example/test/spec/**/*.js',
+          'phantomjs/*',
+          'tasks/*',
+          'Gruntfile.js'
+        ],
+        tasks: 'test'
       }
     },
     mocha: {
@@ -48,6 +52,8 @@ module.exports = function(grunt) {
             grep: 'food'
           },
 
+          reporter: 'Spec',
+
           // Indicates whether 'mocha.run()' should be executed in 
           // 'bridge.js'
           run: true
@@ -64,6 +70,8 @@ module.exports = function(grunt) {
             ignoreLeaks: false,
             grep: 'food'
           },
+
+          reporter: 'Nyan',
 
           // URLs passed through as options
           urls: ['http://localhost:' + port + '/example/test/test2.html'],
@@ -90,7 +98,6 @@ module.exports = function(grunt) {
   // These plugins provide necessary tasks.
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-connect');
-  grunt.loadNpmTasks('grunt-contrib-internal');
 
   // Alias 'test' to 'mocha' so you can run `grunt test`
   grunt.task.registerTask('test', ['connect', 'mocha']);
