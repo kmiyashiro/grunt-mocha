@@ -1,10 +1,13 @@
-# This is for Grunt 0.4.x, if you are using Grunt 0.3.x, use grunt-mocha 0.1.x.
-
-**0.4.0 migration details in [HISTORY.md](HISTORY.md#020)**
-
 Automatically run *client-side* mocha specs via grunt/mocha/PhantomJS
 
 For a grunt task for server-side mocha tests, see https://github.com/yaymukund/grunt-simple-mocha
+
+# Grunt Compatibility
+
+* Grunt 0.4: grunt-mocha 0.2+
+* Grunt 0.3: grunt-mocha 0.1
+
+**Grunt 0.4.0 migration details in [HISTORY.md](HISTORY.md#020)**
 
 # grunt-mocha
 
@@ -29,7 +32,6 @@ mocha: {
     // to include it in your HTML spec file. Instead, you must add an
     // environment check before you run `mocha.run` in your HTML.
     test2: {
-
         // Test files
         src: [ 'example/test/test2.html' ],
         options: {
@@ -52,7 +54,6 @@ mocha: {
 
     // Runs the same as test2 but with URL's
     test3: {
-
         // Test files
         options: {
             // mocha options
