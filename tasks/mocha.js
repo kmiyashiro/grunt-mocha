@@ -42,7 +42,7 @@ module.exports = function(grunt) {
       }
 
       // Expand test values (and façace the Mocha test object)
-      if( test ) {
+      if (test) {
         fullTitle = test.fullTitle;
         test.fullTitle = function() {
           return fullTitle;
@@ -57,7 +57,7 @@ module.exports = function(grunt) {
       }
 
       // Trigger events for each runner listening
-      for( name in listeners ) {
+      for (name in listeners) {
         listeners[name].emit.call(listeners[name], evt, test, err);
       }
     });
@@ -138,8 +138,10 @@ module.exports = function(grunt) {
       });
 
       // Set Mocha reporter
-      var Reporter = reporters[ options.reporter ];
-      if( Reporter == null ) { grunt.fail.fatal('Reporter specified is unknown'); }
+      var Reporter = reporters[options.reporter];
+      if (Reporter == null) {
+        grunt.fail.fatal('Reporter specified is unknown');
+      }
       reporter = new Reporter(runner);
 
       // Launch PhantomJS.
@@ -152,16 +154,16 @@ module.exports = function(grunt) {
         done: function(err) {
           if (err) {
             // If there was an error, abort the series.
-            grunt.fail.fatal( err );
+            grunt.fail.fatal(err);
             done();
           } else {
-            if( runner.stats.failures > 0 ) {
+            if (runner.stats.failures > 0) {
               grunt.fail.warn('An error occured in your tests');
             }
             // Otherwise, process next url.
             next();
           }
-        },
+        }
       });
     },
     // All tests have been run.
