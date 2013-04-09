@@ -29,7 +29,7 @@
     "test": "./node_modules/.bin/grunt test"
   },
   "dependencies": {
-    "grunt-lib-phantomjs": "~0.2",
+    "grunt-lib-phantomjs": "~0.3",
     "mocha": "~1.8"
   },
   "peerDependencies": {
