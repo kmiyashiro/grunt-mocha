@@ -19,6 +19,12 @@ sampleTest: {
 }
 ```
 
+## 0.2.2
+* Updating grunt/gruntplugin dependencies to rc6.
+* Added travis.yml
+* Added .jshintrc and jshint to Gruntfile.js
+* Migrated documentation and Gruntfile.js to grunt-contrib standards
+
 ## 0.2.0
 * **Grunt >=0.4.0 only, MIGRATION REQUIRED if updating from 0.1.x**
 * Uses grunt-lib-phantomjs for easy PhantomJS installation!
