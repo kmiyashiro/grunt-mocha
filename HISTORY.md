@@ -1,5 +1,8 @@
 # History
 
+## 0.3.1
+* Update `grunt-lib-phantomjs` to 0.3.0
+
 ## 0.3.0
 * You may now specify which reporter you want to use (thanks SBoudrias)
 * Growl only shows notices on failures
