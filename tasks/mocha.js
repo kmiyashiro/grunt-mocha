@@ -196,6 +196,12 @@ module.exports = function(grunt) {
     },
     // All tests have been run.
     function() {
+      var okMsg = urls.length + '/' + urls.length + ' passed!';
+      growl(okMsg, {
+        image: asset('growl/ok.png'),
+        title: 'OK',
+        priority: 3
+      });
       done();
     });
   });
