@@ -35,7 +35,7 @@ module.exports = function(grunt) {
       // In this example, there's only one, but you can add as many as
       // you want. You can split them up into different groups here
       // ex: admin: [ 'test/admin.html' ]
-      all: ['example/test/**/!(test2).html'],
+      all: ['example/test/**/!(test2|testBail).html'],
 
       // Runs 'test/test2.html' with specified mocha options.
       // This variant auto-includes 'bridge.js' so you do not have
@@ -54,7 +54,7 @@ module.exports = function(grunt) {
 
           reporter: 'Spec',
 
-          // Indicates whether 'mocha.run()' should be executed in 
+          // Indicates whether 'mocha.run()' should be executed in
           // 'bridge.js'
           run: true
         }
@@ -62,8 +62,6 @@ module.exports = function(grunt) {
 
       // Runs the same as test2 but with URL's
       test3: {
-
-        // Test files
         options: {
           // mocha options
           mocha: {
@@ -76,12 +74,23 @@ module.exports = function(grunt) {
           // URLs passed through as options
           urls: ['http://localhost:' + port + '/example/test/test2.html'],
 
-          // Indicates whether 'mocha.run()' should be executed in 
+          // Indicates whether 'mocha.run()' should be executed in
           // 'bridge.js'
           run: true
         }
+      },
+
+      // Test a failing test with bail: true
+      testBail: {
+        src: ['example/test/testBail.html'],
+        // Bail option
+        options: {
+          run: true,
+          bail: true
+        }
       }
     },
+
     connect: {
       server: {
         options: {
@@ -92,8 +101,10 @@ module.exports = function(grunt) {
     }
   });
 
-  // Actually load this plugin's task(s).
+  // IMPORTANT: Actually load this plugin's task(s).
+  // To use grunt-mocha, replace with grunt.loadNpmTasks('grunt-mocha')
   grunt.loadTasks('tasks');
+  // grunt.loadNpmTasks('grunt-mocha');
 
   // These plugins provide necessary tasks.
   grunt.loadNpmTasks('grunt-contrib-jshint');

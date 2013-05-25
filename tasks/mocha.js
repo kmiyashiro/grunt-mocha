@@ -96,7 +96,7 @@ module.exports = function(grunt) {
     grunt.warn('PhantomJS timed out, possibly due to a missing Mocha run() call.', 90);
   });
 
-  
+
   // console.log pass-through.
   // phantomjs.on('console', grunt.log.writeln.bind(grunt.log));
 
@@ -119,7 +119,9 @@ module.exports = function(grunt) {
       // Main PhantomJS script file
       phantomScript: asset('phantomjs/main.js'),
       // Explicit non-file URLs to test.
-      urls: []
+      urls: [],
+      // Fail with grunt.warn on first test failure
+      bail: false
     });
 
     // Clean Phantomjs options to prevent any conflicts
@@ -130,7 +132,10 @@ module.exports = function(grunt) {
 
     // Combine any specified URLs with src files.
     var urls = options.urls.concat(this.filesSrc);
-    
+
+    // Remember all stats from all tests
+    var testStats = {};
+
     // This task is asynchronous.
     var done = this.async();
 
@@ -163,20 +168,23 @@ module.exports = function(grunt) {
         // Do stuff when done.
         done: function(err) {
           var stats = runner.stats;
+          testStats[grunt.task.current.target] = stats;
 
           if (err) {
             // Show Growl notice
             // @TODO: Get an example of this
             // growl('PhantomJS Error!');
-            
-            // If there was an error, abort the series.
+
+            // If there was a PhantomJS error, abort the series.
             grunt.fatal(err);
             done();
           } else {
-            // If failures, fail and show growl notice
+            // If failures, show growl notice
             if (stats.failures > 0) {
-              var duration = (stats.end - stats.start) + 'ms';
-              var failMsg = stats.failures + '/' + stats.tests + ' tests failed (' + duration + ')';
+              var duration = (stats.end - stats.start);
+              var durationSec = (Math.ceil(duration * 100) / 100000).toFixed(2);
+              var failMsg = stats.failures + '/' + stats.tests +
+                ' tests failed (' + durationSec + 's)';
 
               // Show Growl notice, if avail
               growl(failMsg, {
@@ -185,10 +193,11 @@ module.exports = function(grunt) {
                 priority: 3
               });
 
-              grunt.warn(failMsg);
+              // Bail tests if bail option is true
+              if (options.bail) grunt.warn(failMsg);
             }
 
-            // Otherwise, process next url.
+            // Process next file/url
             next();
           }
         }
@@ -196,12 +205,46 @@ module.exports = function(grunt) {
     },
     // All tests have been run.
     function() {
-      var okMsg = urls.length + '/' + urls.length + ' passed!';
-      growl(okMsg, {
-        image: asset('growl/ok.png'),
-        title: 'OK',
-        priority: 3
+      var passes = 0;
+      var failures = 0;
+      var tests = 0;
+      var duration = 0;
+
+      // console.log(testStats);
+      _.each(testStats, function(stats, target, list) {
+        passes += stats.passes;
+        failures += stats.failures;
+        tests += stats.tests;
+        duration += (stats.end - stats.start);
       });
+
+      var durationSec = (Math.ceil(duration * 100) / 100000).toFixed(2);
+
+      if (failures === 0) {
+        var okMsg = tests + ' passed!' + ' (' + durationSec + 's)';
+
+        growl(okMsg, {
+          image: asset('growl/ok.png'),
+          title: 'Tests passed',
+          priority: 3
+        });
+
+        grunt.log.ok(okMsg);
+      } else {
+        var failMsg = failures + '/' + tests + ' tests failed (' +
+          durationSec + 's)';
+
+        // Show Growl notice, if avail
+        growl(failMsg, {
+          image: asset('growl/error.png'),
+          title: 'Failure in ' + grunt.task.current.target,
+          priority: 3
+        });
+
+        grunt.log.warn(failMsg);
+      }
+
+      // Async test done
       done();
     });
   });

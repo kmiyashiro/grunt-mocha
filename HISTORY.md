@@ -1,5 +1,9 @@
 # History
 
+## 0.3.2
+* Add `bail` option (false by default)
+* Do not bail on error by default
+
 ## 0.3.1
 * Update `grunt-lib-phantomjs` to 0.3.0
 

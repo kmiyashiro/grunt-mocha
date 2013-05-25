@@ -1,4 +1,4 @@
-describe('Wombat', function() {
+describe('Tests should bail', function() {
     beforeEach(function() {
         this.wombat = new Wombat();
     });
@@ -11,18 +11,14 @@ describe('Wombat', function() {
         expect(this.wombat).property('name', 'Wally');
     });
 
-    it('should name itself if name passed in options', function() {
+    it('this test should cause grunt to abort', function() {
         this.wombat = new Wombat({ name: 'Matt' });
         expect(this.wombat).property('name', 'Matt');
     });
 
     describe('#eat', function() {
         it('should throw if no food passed', function() {
-            expect(this.wombat.eat).to.throw('D:');
-        });
-
-        it('should return noms if food passed', function() {
-            expect(this.wombat.eat('apple')).to.eql('nom nom');
+            expect(false).to.be.true
         });
     });
 

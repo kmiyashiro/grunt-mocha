@@ -16,14 +16,6 @@
         mocha.setup('bdd');
     </script>
 
-    <!--
-         IMPORTANT
-         If you do not want to set the `run` option to `true` for some reason
-         and are not using AMD, you must include the bridge.js file
-         in the `phantomjs` folder after you include `mocha.js`
-    -->
-    <script src="../../phantomjs/bridge.js" type="text/javascript" charset="utf-8"></script>
-
     <!-- Include your assertion lib of choice -->
     <script src="js/chai.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript" charset="utf-8">
@@ -33,17 +25,19 @@
 
     <!-- Include anything you want to test -->
     <script src="../js/wombat.js" type="text/javascript" charset="utf-8"></script>
-    <script src="../js/apple.js" type="text/javascript" charset="utf-8"></script>
 
     <!-- Spec files -->
-    <script src="spec/wombat.js" type="text/javascript" charset="utf-8"></script>
-    <script src="spec/apple.js" type="text/javascript" charset="utf-8"></script>
+    <script src="spec/testBail.js" type="text/javascript" charset="utf-8"></script>
 
     <!-- run mocha -->
     <script type="text/javascript" charset="utf-8">
-        mocha
-            // .globals(['Wombat', 'Apple']) // acceptable globals
-            .run();
+        // If tests run in a real browser
+        // Can alternatively do a check on window.PHANTOMJS
+        if (navigator.userAgent.indexOf('PhantomJS') < 0) {
+            mocha
+                // .globals(['Wombat', 'Apple']) // acceptable globals
+                .run();
+        }
     </script>
 </body>
 </html>

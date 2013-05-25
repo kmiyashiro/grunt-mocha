@@ -35,6 +35,8 @@ mocha: {
         // Test files
         src: [ 'example/test/test2.html' ],
         options: {
+            // Bail means if a test fails, grunt will abort. False by default.
+            bail: true,
             // mocha options
             mocha: {
                 ignoreLeaks: false,
