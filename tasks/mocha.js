@@ -24,6 +24,10 @@ module.exports = function(grunt) {
   // External lib.
   var phantomjs = require('grunt-lib-phantomjs').init(grunt);
   var reporters = require('mocha').reporters;
+
+  // Helpers
+  var helpers = require('../support/mocha-helpers');
+
   var reporter;
 
   // Growl is optional
@@ -134,7 +138,7 @@ module.exports = function(grunt) {
     var urls = options.urls.concat(this.filesSrc);
 
     // Remember all stats from all tests
-    var testStats = {};
+    var testStats = [];
 
     // This task is asynchronous.
     var done = this.async();
@@ -168,7 +172,7 @@ module.exports = function(grunt) {
         // Do stuff when done.
         done: function(err) {
           var stats = runner.stats;
-          testStats[grunt.task.current.target] = stats;
+          testStats.push(stats);
 
           if (err) {
             // Show Growl notice
@@ -181,10 +185,9 @@ module.exports = function(grunt) {
           } else {
             // If failures, show growl notice
             if (stats.failures > 0) {
-              var duration = (stats.end - stats.start);
-              var durationSec = (Math.ceil(duration * 100) / 100000).toFixed(2);
-              var failMsg = stats.failures + '/' + stats.tests +
-                ' tests failed (' + durationSec + 's)';
+              var reduced = helpers.reduceStats([stats]);
+              var failMsg = reduced.failures + '/' + reduced.tests +
+                ' tests failed (' + reduced.duration + 's)';
 
               // Show Growl notice, if avail
               growl(failMsg, {
@@ -205,23 +208,10 @@ module.exports = function(grunt) {
     },
     // All tests have been run.
     function() {
-      var passes = 0;
-      var failures = 0;
-      var tests = 0;
-      var duration = 0;
+      var stats = helpers.reduceStats(testStats);
 
-      // console.log(testStats);
-      _.each(testStats, function(stats, target, list) {
-        passes += stats.passes;
-        failures += stats.failures;
-        tests += stats.tests;
-        duration += (stats.end - stats.start);
-      });
-
-      var durationSec = (Math.ceil(duration * 100) / 100000).toFixed(2);
-
-      if (failures === 0) {
-        var okMsg = tests + ' passed!' + ' (' + durationSec + 's)';
+      if (stats.failures === 0) {
+        var okMsg = stats.tests + ' passed!' + ' (' + stats.duration + 's)';
 
         growl(okMsg, {
           image: asset('growl/ok.png'),
@@ -231,8 +221,8 @@ module.exports = function(grunt) {
 
         grunt.log.ok(okMsg);
       } else {
-        var failMsg = failures + '/' + tests + ' tests failed (' +
-          durationSec + 's)';
+        var failMsg = stats.failures + '/' + stats.tests + ' tests failed (' +
+          stats.duration + 's)';
 
         // Show Growl notice, if avail
         growl(failMsg, {
