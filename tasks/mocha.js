@@ -100,10 +100,6 @@ module.exports = function(grunt) {
     grunt.warn('PhantomJS timed out, possibly due to a missing Mocha run() call.', 90);
   });
 
-
-  // console.log pass-through.
-  // phantomjs.on('console', grunt.log.writeln.bind(grunt.log));
-
   // Debugging messages.
   // phantomjs.on('debug', grunt.log.debug.bind(grunt.log, 'phantomjs'));
 
@@ -114,6 +110,8 @@ module.exports = function(grunt) {
   grunt.registerMultiTask('mocha', 'Run Mocha unit tests in a headless PhantomJS instance.', function() {
     // Merge task-specific and/or target-specific options with these defaults.
     var options = this.options({
+      // Output console.log calls
+      log: false,
       // Mocha reporter
       reporter: 'Dot',
       // Default PhantomJS timeout.
@@ -127,6 +125,11 @@ module.exports = function(grunt) {
       // Fail with grunt.warn on first test failure
       bail: false
     });
+
+    // console.log pass-through.
+    if (options.log) {
+      phantomjs.on('console', grunt.log.writeln.bind(grunt.log));
+    }
 
     // Clean Phantomjs options to prevent any conflicts
     var PhantomjsOptions = _.omit(options, 'reporter', 'urls');

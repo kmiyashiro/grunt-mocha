@@ -1,5 +1,9 @@
 # History
 
+## 0.3.3
+* Add `log` option to output `console.log`. False by default.
+* Update Readme to reflect Grunt 0.4 changes (finally)
+
 ## 0.3.2
 * Add `bail` option (false by default)
 * Do not bail on error by default
