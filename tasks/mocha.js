@@ -234,7 +234,7 @@ module.exports = function(grunt) {
           priority: 3
         });
 
-        grunt.log.warn(failMsg);
+        grunt.warn(failMsg);
       }
 
       // Async test done

@@ -1,5 +1,8 @@
 # History
 
+## 0.3.4
+* `grunt.warn` instead of `grunt.log.warn` on failures with bail false, correct exit code. (#71)
+
 ## 0.3.3
 * Add `log` option to output `console.log`. False by default.
 * Update Readme to reflect Grunt 0.4 changes (finally)
