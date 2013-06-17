@@ -123,7 +123,7 @@ Now you can run the mocha task with `grunt mocha`, but it won't work. That's bec
 
 ### PhantomJS
 
-This task is for running Mocha tests in a headless browser, PhantomJS. [See the FAQ on how to install PhantomJS](https://github.com/gruntjs/grunt/blob/master/docs/faq.md#why-does-grunt-complain-that-phantomjs-isnt-installed).
+This task is for running Mocha tests in a headless browser, PhantomJS, which is installed via [grunt-lib-phantomjs](https://github.com/gruntjs/grunt-lib-phantomjs) as a dependency of this task.
 
 ### Mocha
 
@@ -134,5 +134,5 @@ Use [Mocha](http://visionmedia.github.com/mocha/)
 The PhantomJS -> Grunt superdimensional conduit uses `alert`. If you have disabled or aliased alert in your app, this won't work. I have conveniently set a global `PHANTOMJS` on `window` so you can conditionally override alert in your app.
 
 ## License
-Copyright (c) 2012 Kelly Miyashiro
+Copyright (c) 2013 Kelly Miyashiro
 Licensed under the MIT license.
