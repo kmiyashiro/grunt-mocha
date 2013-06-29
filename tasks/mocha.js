@@ -164,11 +164,25 @@ module.exports = function(grunt) {
       if (reporters[options.reporter]) {
         Reporter = reporters[options.reporter];
       }
-      else if (require.resolve(options.reporter)) {
-        Reporter = require(options.reporter);
+      else {
+        // Resolve external reporter module
+        var p;
+        try {
+          p = require.resolve(options.reporter);
+        }
+        catch (e) {
+          // Resolve to local path
+          p = path.resolve(options.reporter);
+        }
+        if (p) {
+          try {
+            Reporter = require(p);
+          }
+          catch (e) { }
+        }
       }
       if (Reporter === null) {
-        grunt.fatal('Specified reporter is unknown: ' + options.reporter);
+        grunt.fatal('Specified reporter is unknown or unresolvable: ' + options.reporter);
       }
       reporter = new Reporter(runner);
 

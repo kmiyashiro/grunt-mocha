@@ -80,6 +80,19 @@ module.exports = function(grunt) {
         }
       },
 
+      // Test using a custom reporter
+      testReporter: {
+        src: ['example/test/test.html', 'example/test/test2.html'],
+        options: {
+          mocha: {
+            ignoreLeaks: false,
+            grep: 'food'
+          },
+          reporter: './example/test/reporter/simple',
+          run: true
+        }
+      },
+
       // Test a failing test with bail: true
       testBail: {
         src: ['example/test/testBail.html'],
