@@ -45,6 +45,7 @@ module.exports = function(grunt) {
   // Manage runners listening to phantomjs
   var phantomjsEventManager = (function() {
     var listeners = {};
+    var suites = [];
 
     // Hook on Phantomjs Mocha reporter events.
     phantomjs.on('mocha.*', function(test) {
@@ -67,7 +68,15 @@ module.exports = function(grunt) {
           return slow;
         };
 
+        test.parent = suites[suites.length - 1] || null;
+
         err = test.err;
+      }
+
+      if (evt === 'suite') {
+          suites.push(test);
+      } else if (evt === 'suite end') {
+          suites.pop(test);
       }
 
       // Trigger events for each runner listening
