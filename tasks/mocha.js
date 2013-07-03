@@ -160,9 +160,29 @@ module.exports = function(grunt) {
       });
 
       // Set Mocha reporter
-      var Reporter = reporters[options.reporter];
-      if (Reporter == null) {
-        grunt.fatal('Reporter specified is unknown');
+      var Reporter = null;
+      if (reporters[options.reporter]) {
+        Reporter = reporters[options.reporter];
+      }
+      else {
+        // Resolve external reporter module
+        var p;
+        try {
+          p = require.resolve(options.reporter);
+        }
+        catch (e) {
+          // Resolve to local path
+          p = path.resolve(options.reporter);
+        }
+        if (p) {
+          try {
+            Reporter = require(p);
+          }
+          catch (e) { }
+        }
+      }
+      if (Reporter === null) {
+        grunt.fatal('Specified reporter is unknown or unresolvable: ' + options.reporter);
       }
       reporter = new Reporter(runner);
 
