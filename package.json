@@ -42,5 +42,11 @@
   },
   "keywords": [
     "gruntplugin mocha test phantomjs"
+  ],
+  "files": [
+    "growl",
+    "phantomjs",
+    "support",
+    "tasks"
   ]
 }
