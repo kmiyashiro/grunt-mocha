@@ -1,5 +1,11 @@
 # History
 
+## 0.4.0
+* Support for custom reporters (@Bartvds)
+* Keep track of suites and fake test parent (@demmer)
+* Package size optimizations (@sindresorhus)
+* Bump mocha version to 1.12
+
 ## 0.3.4
 * `grunt.warn` instead of `grunt.log.warn` on failures with bail false, correct exit code. (#71)
 
