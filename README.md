@@ -54,7 +54,10 @@ mocha: {
       // Indicates whether 'mocha.run()' should be executed in
       // 'bridge.js'. If you include `mocha.run()` in your html spec,
       // check if environment is PhantomJS. See example/test/test2.html
-      run: true
+      run: true,
+
+      // Override the timeout of the test (default is 5000)
+      timeout: 10000
     }
   },
 
