@@ -1,7 +1,7 @@
 {
   "name": "grunt-mocha",
   "description": "Grunt task for running client-side Mocha specs in PhantomJS",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "homepage": "https://github.com/kmiyashiro/grunt-mocha",
   "author": {
     "name": "Kelly Miyashiro",
@@ -33,7 +33,7 @@
     "mocha": "~1.12"
   },
   "peerDependencies": {
-      "grunt": "~0.4"
+    "grunt": "~0.4"
   },
   "devDependencies": {
     "grunt": "~0.4",
@@ -41,7 +41,10 @@
     "grunt-contrib-jshint": "~0.3"
   },
   "keywords": [
-    "gruntplugin mocha test phantomjs"
+    "gruntplugin",
+    "mocha",
+    "test",
+    "phantomjs"
   ],
   "files": [
     "growl",

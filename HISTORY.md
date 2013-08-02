@@ -1,5 +1,8 @@
 # History
 
+## 0.4.1
+* Fixing package.json keywords, no functional changes
+
 ## 0.4.0
 * Support for custom reporters (@Bartvds)
 * Keep track of suites and fake test parent (@demmer)
