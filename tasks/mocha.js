@@ -108,6 +108,13 @@ module.exports = function(grunt) {
     grunt.warn('PhantomJS timed out, possibly due to a missing Mocha run() call.', 90);
   });
 
+  phantomjs.on('error.*', function(error, stack) {
+    var stack = _.map(stack, function(frame) {
+        return "    at " + (frame.function ? frame.function : "undefined") + " (" + frame.file + ":" + frame.line + ")";
+    }).join("\n");
+    grunt.log.error(error + "\n" + stack);
+  });
+
   // Debugging messages.
   phantomjs.on('debug', grunt.log.debug.bind(grunt.log, 'phantomjs'));
 
