@@ -102,9 +102,9 @@ Example setup with AMD (advanced): https://gist.github.com/2655876
 
 ### Grunt and this plugin
 
-First, make sure you have grunt installed globally, `npm install grunt -g`
+First, make sure you have grunt installed globally, `npm install grunt-cli -g`.
 
-Install this grunt plugin next to your project's [Gruntfile.js](http://gruntjs.com/getting-started) with: `npm install grunt-mocha`
+Install this grunt plugin next to your project's [Gruntfile.js](http://gruntjs.com/getting-started) with: `npm install grunt-mocha --save-dev`
 
 Then add this line to your project's `Gruntfile.js` gruntfile at the bottom:
 
