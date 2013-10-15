@@ -27,6 +27,8 @@
         if (test) {
           data.title = test.title;
           data.fullTitle = test.fullTitle();
+          data.duration = test.duration;
+          data.slow = test.slow;
         }
 
         sendMessage('mocha.' + ev, data);
