@@ -116,7 +116,7 @@ Also add this to the `grunt.initConfig` object in the same file:
 
 ```javascript
 mocha: {
-  index: ['specs/index.html']
+  src: ['specs/index.html']
 },
 ```
 
