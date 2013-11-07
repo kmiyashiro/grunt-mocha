@@ -95,6 +95,18 @@ module.exports = function(grunt) {
         }
       },
 
+      // Test log option
+      testLog: {
+        src: ['example/test/test.html'],
+        options: {
+          mocha: {
+            ignoreLeaks: false,
+            grep: 'food'
+          },
+          log: true
+        }
+      },
+
       // Test a failing test with bail: true
       testBail: {
         src: ['example/test/testBail.html'],

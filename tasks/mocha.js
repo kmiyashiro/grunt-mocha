@@ -110,7 +110,7 @@ module.exports = function(grunt) {
   });
 
   // Debugging messages.
-  // phantomjs.on('debug', grunt.log.debug.bind(grunt.log, 'phantomjs'));
+  phantomjs.on('debug', grunt.log.debug.bind(grunt.log, 'phantomjs'));
 
   // ==========================================================================
   // TASKS
@@ -136,16 +136,21 @@ module.exports = function(grunt) {
       bail: false
     });
 
-    // console.log pass-through.
+    // Output console messages if log == true
     if (options.log) {
-      phantomjs.on('console', grunt.log.writeln.bind(grunt.log));
+      phantomjs.on('console', grunt.log.writeln);
+    } else {
+      phantomjs.off('console', grunt.log.writeln);
     }
 
-    // Clean Phantomjs options to prevent any conflicts
-    var PhantomjsOptions = _.omit(options, 'reporter', 'urls');
+    var optsStr = JSON.stringify(options, null, '  ');
+    grunt.verbose.writeln('Options: ' + optsStr);
 
-    var configStr = JSON.stringify(PhantomjsOptions, null, '  ');
-    grunt.verbose.writeln('Additional configuration: ' + configStr);
+    // Clean Phantomjs options to prevent any conflicts
+    var PhantomjsOptions = _.omit(options, 'reporter', 'urls', 'log', 'bail');
+
+    var phantomOptsStr = JSON.stringify(PhantomjsOptions, null, '  ');
+    grunt.verbose.writeln('Phantom options: ' + phantomOptsStr);
 
     // Combine any specified URLs with src files.
     var urls = options.urls.concat(this.filesSrc);
