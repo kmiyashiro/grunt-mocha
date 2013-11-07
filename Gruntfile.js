@@ -103,6 +103,15 @@ module.exports = function(grunt) {
           run: true,
           bail: true
         }
+      },
+
+      // This test should never run
+      neverTest: {
+        src: ['example/test/test.html'],
+        // Bail option
+        options: {
+          run: true
+        }
       }
     },
 

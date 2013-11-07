@@ -12,13 +12,13 @@ describe('Tests should bail', function() {
     });
 
     it('this test should cause grunt to abort', function() {
-        this.wombat = new Wombat({ name: 'Matt' });
-        expect(this.wombat).property('name', 'Matt');
+        expect(false).to.be.true;
     });
 
     describe('#eat', function() {
         it('should throw if no food passed', function() {
-            expect(false).to.be.true
+            this.wombat = new Wombat({ name: 'Matt' });
+            expect(this.wombat).property('name', 'Matt');
         });
     });
 

@@ -173,20 +173,19 @@ module.exports = function(grunt) {
       var Reporter = null;
       if (reporters[options.reporter]) {
         Reporter = reporters[options.reporter];
-      }
-      else {
+      } else {
         // Resolve external reporter module
-        var p;
+        var externalReporter;
         try {
-          p = require.resolve(options.reporter);
-        }
-        catch (e) {
+          externalReporter = require.resolve(options.reporter);
+        } catch (e) {
           // Resolve to local path
-          p = path.resolve(options.reporter);
+          externalReporter = path.resolve(options.reporter);
         }
-        if (p) {
+
+        if (externalReporter) {
           try {
-            Reporter = require(p);
+            Reporter = require(externalReporter);
           }
           catch (e) { }
         }
@@ -248,7 +247,7 @@ module.exports = function(grunt) {
 
         growl(okMsg, {
           image: asset('growl/ok.png'),
-          title: 'Tests passed',
+          title: okMsg,
           priority: 3
         });
 
@@ -260,11 +259,16 @@ module.exports = function(grunt) {
         // Show Growl notice, if avail
         growl(failMsg, {
           image: asset('growl/error.png'),
-          title: 'Failure in ' + grunt.task.current.target,
+          title: failMsg,
           priority: 3
         });
 
-        grunt.warn(failMsg);
+        // Bail tests if bail option is true
+        if (options.bail) {
+          grunt.warn(failMsg);
+        } else {
+          grunt.log.error(failMsg);
+        }
       }
 
       // Async test done

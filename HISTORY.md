@@ -1,5 +1,8 @@
 # History
 
+## 0.4.2
+* Fix bail option
+
 ## 0.4.1
 * Fixing package.json keywords, no functional changes
 
