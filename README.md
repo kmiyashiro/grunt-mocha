@@ -122,7 +122,7 @@ mocha: {
 
 Replace `specs/index.html` with the location of your mocha spec running html file.
 
-Now you can run the mocha task with `grunt mocha`, but it won't work. That's because you need...
+Now you can run the mocha task with `grunt mocha`.
 
 ### PhantomJS
 
