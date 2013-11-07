@@ -1,5 +1,8 @@
 # History
 
+## 0.4.3
+* Bump grunt-lib-phantomjs to 0.4, which uses PhantomJS 1.9.*
+
 ## 0.4.2
 * Fix bail option
 
