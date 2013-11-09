@@ -138,6 +138,7 @@ module.exports = function(grunt) {
 
     // Output console messages if log == true
     if (options.log) {
+      phantomjs.removeAllListeners(['console']);
       phantomjs.on('console', grunt.log.writeln);
     } else {
       phantomjs.off('console', grunt.log.writeln);
