@@ -1,5 +1,10 @@
 # History
 
+## 0.4.4
+* Bump example mocha to `1.14.0`
+* Compatible with mocha `1.14.0` (@perfectworks)
+* Cleanup log listeners during watch (@rayshih)
+
 ## 0.4.3
 * Bump grunt-lib-phantomjs to 0.4, which uses PhantomJS 1.9.*
 
