@@ -16,6 +16,7 @@
 
 module.exports = function(grunt) {
   var _ = grunt.util._;
+  var util = require('util');
 
   // Nodejs libs.
   var path = require('path');
@@ -162,6 +163,19 @@ module.exports = function(grunt) {
     // This task is asynchronous.
     var done = this.async();
 
+    // Hijack console.log to capture reporter output
+    var dest = this.data.dest;
+    var output = [];
+    var consoleLog = console.log;
+
+    // Only hijack if we really need to
+    if (dest) {
+      console.log = function() {
+        consoleLog.apply(console, arguments);
+        output.push(util.format.apply(util, arguments));
+      };
+    }
+
     // Process each filepath in-order.
     grunt.util.async.forEachSeries(urls, function(url, next) {
       grunt.log.writeln('Testing: ' + url);
@@ -246,6 +260,12 @@ module.exports = function(grunt) {
     },
     // All tests have been run.
     function() {
+      if (dest) {
+        // Restore console.log to original and write the output
+        console.log = consoleLog;
+        grunt.file.write(dest, output.join('\n'));
+      }
+
       var stats = helpers.reduceStats(testStats);
 
       if (stats.failures === 0) {
