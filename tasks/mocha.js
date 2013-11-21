@@ -155,7 +155,7 @@ module.exports = function(grunt) {
     grunt.verbose.writeln('Phantom options: ' + phantomOptsStr);
 
     // Combine any specified URLs with src files.
-    var urls = options.urls.concat(this.filesSrc);
+    var urls = options.urls.concat(_.compact(this.filesSrc));
 
     // Remember all stats from all tests
     var testStats = [];
