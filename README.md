@@ -27,7 +27,15 @@ _Run this task with the `grunt mocha` command._
 
 #### files/src
 
-There are a number of options available. Please review the [minimatch options here](https://github.com/isaacs/minimatch#options). As well as some additional options as follows:
+There are a number of options available. Please review the [minimatch options here](https://github.com/isaacs/minimatch#options).
+
+Example:
+```js
+mocha: {
+  test: {
+    src: ['tests/**/*.html'],
+  },
+},
 
 #### tasks
 Type: `String|Array`

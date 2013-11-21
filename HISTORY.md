@@ -1,5 +1,8 @@
 # History
 
+## 0.4.5
+* Add `dest` output config for outputting to a file (@BYK)
+
 ## 0.4.4
 * Bump example mocha to `1.14.0`
 * Compatible with mocha `1.14.0` (@perfectworks)
