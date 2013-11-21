@@ -63,7 +63,7 @@ module.exports = function(grunt) {
       },
 
       // Runs the same as test2 but with URL's
-      test3: {
+      testUrls: {
         options: {
           // mocha options
           mocha: {
@@ -152,16 +152,22 @@ module.exports = function(grunt) {
     },
 
     connect: {
-      server: {
+      testUrls: {
         options: {
           port: port,
+          base: '.'
+        }
+      },
+      testDest: {
+        options: {
+          port: port + 1,
           base: '.'
         }
       }
     }
   });
 
-  grunt.registerTask('verify-test-results', function () {
+  grunt.registerTask('verifyDestResults', function () {
     var expected = ['spec', 'xunit'];
 
     expected.forEach(function (reporter) {
@@ -188,8 +194,26 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-connect');
 
-  // Alias 'test' to 'mocha' so you can run `grunt test`
-  grunt.task.registerTask('test', ['connect', 'mocha', 'verify-test-results']);
+
+  grunt.task.registerTask('testUrls', ['connect:testUrls', 'mocha:testUrls']);
+  grunt.task.registerTask('testLog', ['mocha:testLog']);
+  grunt.task.registerTask('testReporter', ['mocha:testReporter']);
+  grunt.task.registerTask('testDest', [
+    'mocha:testDest1',
+    'connect:testDest',
+    'mocha:testDest2',
+    'verifyDestResults'
+  ]);
+  // WARNING: Running this test will cause grunt to fail after mocha:testBail
+  grunt.task.registerTask('testBail', ['mocha:testBail', 'mocha:neverTest']);
+  grunt.task.registerTask('test', [
+    'mocha:all',
+    'testUrls',
+    'testLog',
+    'testReporter',
+    'testDest',
+    'testBail'
+  ]);
 
   // By default, lint and run all tests.
   grunt.task.registerTask('default', ['jshint', 'test']);
