@@ -76,7 +76,7 @@
           ignoreLeaks: true,
           reporter: GruntReporter
         },
-        run = options.run,
+        run = options.run || false,
         key;
 
     if (options) {

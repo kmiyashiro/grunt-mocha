@@ -127,7 +127,6 @@ module.exports = function(grunt) {
 
           run: true
         },
-        src: [],  // we need this since we use `dest`.
         dest: 'example/test/results/xunit.out'
       },
 
