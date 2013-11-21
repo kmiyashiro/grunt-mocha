@@ -18,7 +18,6 @@
 
     // Create a listener who'll bubble events from Phantomjs to Grunt
     function createGruntListener(ev, runner) {
-
       runner.on(ev, function(test, err) {
         var data = {
           err: err
@@ -32,7 +31,6 @@
         }
 
         sendMessage('mocha.' + ev, data);
-
       });
     }
 
@@ -60,7 +58,8 @@
         'end'
       ];
 
-      for(var i = 0; i < events.length; i++) {
+      for (var i = 0; i < events.length; i++) {
+        console.log('created listener for', events[i]);
         createGruntListener(events[i], runner);
       }
 
@@ -71,35 +70,31 @@
     GruntReporter.prototype = new Klass();
 
     var options = window.PHANTOMJS;
-    if (options) {
-      // Default mocha options
-      var config = {
-            ui: 'bdd',
-            ignoreLeaks: true,
-            reporter: GruntReporter
-          },
-          run = options.run,
-          key;
+    // Default mocha options
+    var config = {
+          ui: 'bdd',
+          ignoreLeaks: true,
+          reporter: GruntReporter
+        },
+        run = options.run,
+        key;
 
-      if (options) {
-        // If options is a string, assume it is to set the UI (bdd/tdd etc)
-        if (typeof options === "string") {
-          config.ui = options;
-        } else {
-          // Extend defaults with passed options
-          for (key in options.mocha) {
-            config[key] = options.mocha[key];
-          }
+    if (options) {
+      // If options is a string, assume it is to set the UI (bdd/tdd etc)
+      if (typeof options === "string") {
+        config.ui = options;
+      } else {
+        // Extend defaults with passed options
+        for (key in options.mocha) {
+          config[key] = options.mocha[key];
         }
       }
+    }
 
-      config.reporter = GruntReporter;
+    mocha.setup(config);
 
-      mocha.setup(config);
-
-      // task option `run`, automatically runs mocha for grunt only
-      if (run) {
-        mocha.run();
-      }
+    // task option `run`, automatically runs mocha for grunt only
+    if (run) {
+      mocha.run();
     }
 }());
