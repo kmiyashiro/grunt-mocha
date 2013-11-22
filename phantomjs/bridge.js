@@ -59,7 +59,6 @@
       ];
 
       for (var i = 0; i < events.length; i++) {
-        console.log('created listener for', events[i]);
         createGruntListener(events[i], runner);
       }
 
