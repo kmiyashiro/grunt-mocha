@@ -1,5 +1,8 @@
 # History
 
+## 0.4.6
+* lodash is a dep, not a dev-dep
+
 ## 0.4.5
 * Add `dest` output config for outputting to a file (@BYK)
 
