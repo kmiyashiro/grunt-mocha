@@ -231,7 +231,7 @@ module.exports = function(grunt) {
 
             // If there was a PhantomJS error, abort the series.
             grunt.fatal(err);
-            done();
+            done(false);
           } else {
             // If failures, show growl notice
             if (stats.failures > 0) {
@@ -276,6 +276,10 @@ module.exports = function(grunt) {
         });
 
         grunt.log.ok(okMsg);
+
+        // Async test pass
+        done(true);
+
       } else {
         var failMsg = stats.failures + '/' + stats.tests + ' tests failed (' +
           stats.duration + 's)';
@@ -293,10 +297,10 @@ module.exports = function(grunt) {
         } else {
           grunt.log.error(failMsg);
         }
-      }
 
-      // Async test done
-      done();
+        // Async test fail
+        done(false);
+      }
     });
   });
 };
