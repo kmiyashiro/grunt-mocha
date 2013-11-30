@@ -1,5 +1,8 @@
 # History
 
+## 0.4.7
+* Explicit `done()` call with true/false so grunt exits with correct code. (@Bartvds)
+
 ## 0.4.6
 * lodash is a dep, not a dev-dep
 
