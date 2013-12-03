@@ -102,6 +102,10 @@ page.onResourceError = function(resourceError) {
   sendMessage('onResourceError', resourceError.url, resourceError.errorString);
 };
 
+page.onResourceTimeout = function(request) {
+  sendMessage('onResourceTimeout', request.url, request.errorString);
+};
+
 // Run before the page is loaded.
 page.onInitialized = function() {
   sendMessage('onInitialized');
