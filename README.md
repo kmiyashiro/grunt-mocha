@@ -36,6 +36,7 @@ mocha: {
     src: ['tests/**/*.html'],
   },
 },
+```
 
 #### tasks
 Type: `String|Array`
