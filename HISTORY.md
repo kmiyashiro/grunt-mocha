@@ -1,5 +1,8 @@
 # History
 
+## 0.4.8
+* Add test state to output for XUnit
+
 ## 0.4.7
 * Explicit `done()` call with true/false so grunt exits with correct code. (@Bartvds)
 
