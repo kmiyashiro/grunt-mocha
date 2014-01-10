@@ -26,6 +26,7 @@
         if (test) {
           data.title = test.title;
           data.fullTitle = test.fullTitle();
+          data.state = test.state;
           data.duration = test.duration;
           data.slow = test.slow;
         }
