@@ -101,14 +101,18 @@ Instead of files, hit these URLs. Usually used in conjunction with the connect t
 
 ```js
 connect: {
-  options: {
-    port: 8888,
-    base: '.',
+  server: {
+    options: {
+      port: 8888,
+      base: '.',
+    },
   },
 },
 mocha: {
   test: {
-    urls: [ 'http://localhost:8888/example/test/test2.html' ],
+    options: {
+      urls: [ 'http://localhost:8888/example/test/test2.html' ],
+    },
   },
 },
 ```
