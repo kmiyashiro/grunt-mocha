@@ -132,7 +132,9 @@ module.exports = function(grunt) {
       // Explicit non-file URLs to test.
       urls: [],
       // Fail with grunt.warn on first test failure
-      bail: false
+      bail: false,
+      // Log script errors as grunt errors
+      logErrors: false
     });
 
     // Output console messages if log == true
@@ -141,6 +143,16 @@ module.exports = function(grunt) {
       phantomjs.on('console', grunt.log.writeln);
     } else {
       phantomjs.off('console', grunt.log.writeln);
+    }
+
+    // Output errors on script errors
+    if (options.logErrors) {
+      phantomjs.on('error.*', function(error, stack) {
+        var formattedStack = _.map(stack, function(frame) {
+          return "    at " + (frame.function ? frame.function : "undefined") + " (" + frame.file + ":" + frame.line + ")";
+        }).join("\n");
+        grunt.log.error(error + "\n" + formattedStack);
+      });
     }
 
     var optsStr = JSON.stringify(options, null, '  ');
