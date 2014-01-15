@@ -176,6 +176,24 @@ mocha: {
 },
 ```
 
+#### options.logErrors
+Type: `Boolean`  
+Default: `false`
+
+Fail and output script errors.
+
+Example:
+```js
+mocha: {
+  test: {
+    src: ['tests/**/*.html'],
+    options: {
+      logErrors: true,
+    },
+  },
+},
+```
+
 #### options.mocha
 Type: `Object`
 

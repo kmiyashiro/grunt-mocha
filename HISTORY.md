@@ -1,5 +1,8 @@
 # History
 
+## 0.4.9
+* Add `logErrors` option to fail/log script errors (@demmer)
+
 ## 0.4.8
 * Add test state to output for XUnit
 
