@@ -173,7 +173,8 @@ module.exports = function(grunt) {
     if (dest) {
       console.log = function() {
         consoleLog.apply(console, arguments);
-        processWrite.apply(process.stdout, arguments);
+        // FIXME: This breaks older versions of mocha
+        // processWrite.apply(process.stdout, arguments);
         output.push(util.format.apply(util, arguments));
       };
     }
