@@ -148,10 +148,10 @@ module.exports = function(grunt) {
     // Output errors on script errors
     if (options.logErrors) {
       phantomjs.on('error.*', function(error, stack) {
-        var stack = _.map(stack, function(frame) {
+        var formattedStack = _.map(stack, function(frame) {
           return "    at " + (frame.function ? frame.function : "undefined") + " (" + frame.file + ":" + frame.line + ")";
         }).join("\n");
-        grunt.log.error(error + "\n" + stack);
+        grunt.log.error(error + "\n" + formattedStack);
       });
     }
 
