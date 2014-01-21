@@ -1,5 +1,8 @@
 # History
 
+## 0.4.10
+* Actually error out if `logErrors` is true and error
+
 ## 0.4.9
 * Add `logErrors` option to fail/log script errors (@demmer)
 
