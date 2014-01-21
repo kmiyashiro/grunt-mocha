@@ -151,7 +151,7 @@ module.exports = function(grunt) {
         var formattedStack = _.map(stack, function(frame) {
           return "    at " + (frame.function ? frame.function : "undefined") + " (" + frame.file + ":" + frame.line + ")";
         }).join("\n");
-        grunt.log.error(error + "\n" + formattedStack);
+        grunt.fail.warn(error + "\n" + formattedStack, 3);
       });
     }
 
