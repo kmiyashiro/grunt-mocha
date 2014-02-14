@@ -27,6 +27,10 @@ _Run this task with the `grunt mocha` command._
 
 #### files/src
 
+Type: `String|Array`
+
+This defines which HTML spec files to run using PhantomJS. These are the same files you would open to run tests in a browser.
+
 There are a number of options available. Please review the [minimatch options here](https://github.com/isaacs/minimatch#options).
 
 Example:
@@ -37,11 +41,6 @@ mocha: {
   },
 },
 ```
-
-#### tasks
-Type: `String|Array`
-
-This defines which HTML spec files to run using PhantomJS. These are the same files you would open to run tests in a browser.
 
 #### dest
 Type: `String`  
