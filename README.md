@@ -214,7 +214,7 @@ mocha: {
 
 #### options.reporter
 Type: `String`  
-Default: `'Spec'`
+Default: `'Dot'`
 
 The reporter to use. **Note:** XUnit and those types of reporters should probably use the `dest` option.
 
