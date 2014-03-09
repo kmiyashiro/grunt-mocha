@@ -43,7 +43,7 @@ mocha: {
 ```
 
 #### dest
-Type: `String`  
+Type: `String`
 Default: `undefined`
 
 Write reporter output to a file. Useful if you need a file to feed your CI bot.
@@ -52,15 +52,17 @@ Example:
 ```js
 mocha: {
   test: {
+    options: {
+      reporter: 'XUnit'
+    },
     src: ['tests/**/*.html'],
-    reporter: 'XUnit',
     dest: './test/output/xunit.out',
   },
 },
 ```
 
 #### options.run
-Type: `Boolean`  
+Type: `Boolean`
 Default: `false`
 
 **NOTE:** This will probably default to true in `0.5`.
@@ -93,7 +95,7 @@ mocha: {
 ```
 
 #### options.urls
-Type: `Array|String`  
+Type: `Array|String`
 Default: `[]`
 
 Instead of files, hit these URLs. Usually used in conjunction with the connect task to spin up a server for testing.
@@ -122,7 +124,7 @@ grunt connect mocha
 ```
 
 #### options.timeout
-Type: `Number`  
+Type: `Number`
 Default: `5000`
 
 PhantomJS timeout in milliseconds. If nothing happens within 5 seconds, exit.
@@ -140,7 +142,7 @@ mocha: {
 ```
 
 #### options.bail
-Type: `Boolean`  
+Type: `Boolean`
 Default: `false`
 
 Call `grunt.warn` and exit the grunt task on the first failed test. This only calls `grunt.warn` after the entire spec file is finished.
@@ -158,7 +160,7 @@ mocha: {
 ```
 
 #### options.log
-Type: `Boolean`  
+Type: `Boolean`
 Default: `false`
 
 Print any `console.log` calls from PhantomJS to the command line. Only used for very quick and dirty debugging. It is highly recommended that you open the failing spec file in a browser so you can use much richer debugging tools.
@@ -176,7 +178,7 @@ mocha: {
 ```
 
 #### options.logErrors
-Type: `Boolean`  
+Type: `Boolean`
 Default: `false`
 
 Fail and output script errors.
@@ -213,7 +215,7 @@ mocha: {
 ```
 
 #### options.reporter
-Type: `String`  
+Type: `String`
 Default: `'Dot'`
 
 The reporter to use. **Note:** XUnit and those types of reporters should probably use the `dest` option.
