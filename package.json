@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "grunt-lib-phantomjs": "~0.4",
-    "mocha": "~1.14",
+    "mocha": "~1.18",
     "lodash": "~2.3.0"
   },
   "peerDependencies": {
