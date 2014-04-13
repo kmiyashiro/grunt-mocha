@@ -134,7 +134,9 @@ module.exports = function(grunt) {
       // Fail with grunt.warn on first test failure
       bail: false,
       // Log script errors as grunt errors
-      logErrors: false
+      logErrors: false,
+      // Growl notification when tests pass.
+      growlOnSuccess: true
     });
 
     // Output console messages if log == true
@@ -286,11 +288,13 @@ module.exports = function(grunt) {
       if (stats.failures === 0) {
         var okMsg = stats.tests + ' passed!' + ' (' + stats.duration + 's)';
 
-        growl(okMsg, {
-          image: asset('growl/ok.png'),
-          title: okMsg,
-          priority: 3
-        });
+        if (options.growlOnSuccess) {
+          growl(okMsg, {
+            image: asset('growl/ok.png'),
+            title: okMsg,
+            priority: 3
+          });
+        }
 
         grunt.log.ok(okMsg);
 

@@ -159,6 +159,24 @@ mocha: {
 },
 ```
 
+#### options.growlOnSuccess
+Type: `Boolean`
+Default: `true`
+
+Display a Growl notification when all tests successfully pass.
+
+Example:
+```js
+mocha: {
+  test: {
+    src: ['tests/**/*.html'],
+    options: {
+      growlOnSuccess: false,
+    },
+  },
+},
+```
+
 #### options.log
 Type: `Boolean`
 Default: `false`
