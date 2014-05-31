@@ -1,5 +1,10 @@
 # History
 
+## 0.4.11
+* Bump mocha to 1.18 for promise support
+* README fixes
+* `options.growlOnSuccess` option added (@naganowl)
+
 ## 0.4.10
 * Actually error out if `logErrors` is true and error
 
