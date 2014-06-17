@@ -10,10 +10,32 @@
 /*global mocha:true, alert:true, window:true */
 
 (function() {
+    var MOCHA_EVENTS = [
+      'start',
+      'test',
+      'test end',
+      'suite',
+      'suite end',
+      'fail',
+      'pass',
+      'pending',
+      'end'
+    ];
+
     // Send messages to the parent phantom.js process via alert! Good times!!
     function sendMessage() {
+      var cache = [];
       var args = [].slice.call(arguments);
-      alert(JSON.stringify(args));
+      alert(JSON.stringify(args, decycle));
+
+      // Safe stringifying of cyclical JSON
+      function decycle(key, val) {
+        if (typeof val == 'object' && val !== null) {
+          if (cache.indexOf(val) >= 0) return;
+          cache.push(val);
+        }
+        return val;
+      }
     }
 
     // Create a listener who'll bubble events from Phantomjs to Grunt
@@ -47,20 +69,8 @@
       mochaInstance.reporters.HTML.call(this, runner);
 
       // Create a Grunt listener for each Mocha events
-      var events = [
-        'start',
-        'test',
-        'test end',
-        'suite',
-        'suite end',
-        'fail',
-        'pass',
-        'pending',
-        'end'
-      ];
-
-      for (var i = 0; i < events.length; i++) {
-        createGruntListener(events[i], runner);
+      for (var i = 0; i < MOCHA_EVENTS.length; i++) {
+        createGruntListener(MOCHA_EVENTS[i], runner);
       }
 
     };
@@ -70,31 +80,30 @@
     GruntReporter.prototype = new Klass();
 
     var options = window.PHANTOMJS;
+
     // Default mocha options
     var config = {
-          ui: 'bdd',
-          ignoreLeaks: true,
-          reporter: GruntReporter
-        },
-        run = options.run || false,
-        key;
+      ui: 'bdd',
+      ignoreLeaks: true,
+      reporter: GruntReporter
+    };
 
-    if (options) {
-      // If options is a string, assume it is to set the UI (bdd/tdd etc)
-      if (typeof options === "string") {
-        config.ui = options;
-      } else {
-        // Extend defaults with passed options
-        for (key in options.mocha) {
-          config[key] = options.mocha[key];
-        }
+    // If options is a string, assume it is to set the UI (bdd/tdd etc)
+    if (typeof options == 'string') {
+      config.ui = options;
+    }
+
+    // Extend defaults with passed options
+    if (typeof options === 'object' && options !== null) {
+      for (var key in options.mocha) {
+        config[key] = options.mocha[key];
       }
     }
 
     mocha.setup(config);
 
     // task option `run`, automatically runs mocha for grunt only
-    if (run) {
+    if (options && options.run) {
       mocha.run();
     }
 }());
