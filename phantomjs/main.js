@@ -13,6 +13,7 @@
 'use strict';
 
 var fs = require('fs');
+var _ = require('lodash');
 
 // The temporary file used for communications.
 var tmpfile = phantom.args[0];
@@ -54,6 +55,11 @@ var inject = function() {
   page.injectJs(options.inject);
   injected = true;
 };
+
+// Merge phantomjs page settings from options.page
+if (options.page) {
+  _.merge(page, options.page);
+}
 
 // Keep track if the client-side helper script already has been injected.
 page.onUrlChanged = function(newUrl) {
