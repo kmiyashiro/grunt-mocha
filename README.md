@@ -271,12 +271,14 @@ Set properties in the PhantomJS webpage instance used for tests, see http://phan
 Example:
 ```js
 mocha: {
-  options: { 
-    page: { 
-      settings: { 
-        webSecurityEnabled: false,  // disable cors checks in phantomjs
+  test: {
+    options: { 
+      page: { 
+        settings: { 
+          webSecurityEnabled: false,  // disable cors checks in phantomjs
+        },  
       }, 
-    }, 
+    },
   },
 },
 ```
