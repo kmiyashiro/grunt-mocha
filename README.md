@@ -263,6 +263,26 @@ mocha: {
 },
 ```
 
+### options.page
+Type: `Object`
+
+Set properties in the PhantomJS webpage instance used for tests, see http://phantomjs.org/api/webpage/
+
+Example:
+```js
+mocha: {
+  test: {
+    options: { 
+      page: { 
+        settings: { 
+          webSecurityEnabled: false,  // disable cors checks in phantomjs
+        },  
+      }, 
+    },
+  },
+},
+```
+
 ## Hacks
 
 The PhantomJS -> Grunt superdimensional conduit uses `alert`. If you have disabled or aliased alert in your app, this won't work. I have conveniently set a global `PHANTOMJS` on `window` so you can conditionally override alert in your app.

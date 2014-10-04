@@ -35,7 +35,7 @@ module.exports = function(grunt) {
       // In this example, there's only one, but you can add as many as
       // you want. You can split them up into different groups here
       // ex: admin: [ 'test/admin.html' ]
-      all: ['example/test/**/!(test2|testBail).html'],
+      all: ['example/test/**/!(test2|testBail|testPage).html'],
 
       // Runs 'test/test2.html' with specified mocha options.
       // This variant auto-includes 'bridge.js' so you do not have
@@ -147,6 +147,18 @@ module.exports = function(grunt) {
         options: {
           run: true
         }
+      },
+
+      // Test page options
+      testPage: {
+        src: ['example/test/testPage.html'],
+        options: {
+          page: {
+            settings: {
+              userAgent: 'grunt-mocha-agent'
+            }
+          }
+        }
       }
     },
 
@@ -203,6 +215,7 @@ module.exports = function(grunt) {
     'mocha:testDest2',
     'verifyDestResults'
   ]);
+  grunt.task.registerTask('testPage', ['mocha:testPage']);
   // WARNING: Running this test will cause grunt to fail after mocha:testBail
   grunt.task.registerTask('testBail', ['mocha:testBail', 'mocha:neverTest']);
   grunt.task.registerTask('test', [
@@ -211,7 +224,8 @@ module.exports = function(grunt) {
     'testLog',
     'testReporter',
     'testDest',
-    'testBail'
+    'testPage',
+    'testBail',
   ]);
 
   // By default, lint and run all tests.
