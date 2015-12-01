@@ -123,7 +123,7 @@ module.exports = function(grunt) {
           reporter: 'XUnit',
 
           // URLs passed through as options
-          urls: ['http://localhost:' + port + '/example/test/test2.html'],
+          urls: ['http://localhost:' + (port + 1) + '/example/test/test2.html'],
 
           run: true
         },
