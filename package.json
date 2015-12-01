@@ -30,13 +30,14 @@
   },
   "dependencies": {
     "grunt-lib-phantomjs": "^0.7.1",
-    "mocha": "^1.21.5",
+    "mocha": "^2.3.4",
     "lodash": "^3.9.0"
   },
   "peerDependencies": {
     "grunt": "~0.4"
   },
   "devDependencies": {
+    "chai": "^3.4.1",
     "grunt": "~0.4",
     "grunt-contrib-connect": "~0.2",
     "grunt-contrib-jshint": "~0.3"
