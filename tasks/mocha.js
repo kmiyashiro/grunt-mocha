@@ -179,16 +179,11 @@ module.exports = function(grunt) {
     var dest = this.data.dest;
     var output = [];
     var consoleLog = console.log;
-    // Latest mocha xunit reporter sends to process.stdout instead of console
-    var processWrite = process.stdout.write;
-
 
     // Only hijack if we really need to
     if (dest) {
       console.log = function() {
         consoleLog.apply(console, arguments);
-        // FIXME: This breaks older versions of mocha
-        // processWrite.apply(process.stdout, arguments);
         output.push(util.format.apply(util, arguments));
       };
     }
