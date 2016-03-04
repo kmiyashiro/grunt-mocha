@@ -26,10 +26,10 @@
     "node": "*"
   },
   "scripts": {
-    "test": "./node_modules/.bin/grunt test"
+    "test": "grunt test"
   },
   "dependencies": {
-    "grunt-lib-phantomjs": "^0.7.1",
+    "grunt-lib-phantomjs": "^1.0.1",
     "mocha": "^2.3.4",
     "lodash": "^3.9.0"
   },
