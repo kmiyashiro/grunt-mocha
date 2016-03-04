@@ -26,11 +26,11 @@
     "node": "*"
   },
   "scripts": {
-    "test": "./node_modules/.bin/grunt test"
+    "test": "grunt test"
   },
   "dependencies": {
-    "grunt-lib-phantomjs": "^0.7.1",
-    "mocha": "^2.3.4",
+    "grunt-lib-phantomjs": "gruntjs/grunt-lib-phantomjs#776bc346a8b7e151fe55c7f6dcb5563c0272e51b",
+    "mocha": "^2.4.5",
     "lodash": "^3.9.0"
   },
   "peerDependencies": {

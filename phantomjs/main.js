@@ -14,13 +14,14 @@
 
 var fs = require('fs');
 var _ = require('lodash');
+var system = require('system');
 
 // The temporary file used for communications.
-var tmpfile = phantom.args[0];
+var tmpfile = system.args[1];
 // The page .html file to load.
-var url = phantom.args[1];
+var url = system.args[2];
 // Extra, optionally overridable stuff.
-var options = JSON.parse(phantom.args[2] || {});
+var options = JSON.parse(system.args[3] || {});
 
 // Keep track of the last time a client message was sent.
 var last = new Date();

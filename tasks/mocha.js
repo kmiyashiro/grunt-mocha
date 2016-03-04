@@ -181,7 +181,11 @@ module.exports = function(grunt) {
     var consoleLog = console.log;
 
     // Only hijack if we really need to
+    // Some "good" reporters like XUnit accept an `output` option
+    // and we pass `dest` there but there's no good way to detect
+    // if a reporter supports this so stub out console.log just in case.
     if (dest) {
+      grunt.file.delete(dest)
       console.log = function() {
         consoleLog.apply(console, arguments);
         output.push(util.format.apply(util, arguments));
@@ -226,7 +230,7 @@ module.exports = function(grunt) {
         grunt.fatal('Specified reporter is unknown or unresolvable: ' + options.reporter);
       }
       // XUnit reporter requires second arg (options)
-      reporter = new Reporter(runner, {});
+      reporter = new Reporter(runner, { reporterOptions: { output: dest } });
 
       // Launch PhantomJS.
       phantomjs.spawn(url, {
@@ -271,14 +275,18 @@ module.exports = function(grunt) {
         }
       });
     },
+
     // All tests have been run.
     function() {
       if (dest) {
         // Restore console.log to original and write the output
         console.log = consoleLog;
-        grunt.file.write(dest, output.join('\n'));
-      }
 
+        if (!grunt.file.exists(dest)) {
+            // Write only if our reporter ignored our `output` option
+            grunt.file.write(dest, output.join('\n'));
+        }
+      }
       var stats = helpers.reduceStats(testStats);
 
       if (stats.failures === 0) {
