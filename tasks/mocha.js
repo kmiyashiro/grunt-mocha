@@ -136,7 +136,10 @@ module.exports = function(grunt) {
       // Log script errors as grunt errors
       logErrors: false,
       // Growl notification when tests pass.
-      growlOnSuccess: true
+      growlOnSuccess: true,
+      // Run tests, set to false if you would rather call `mocha.run` yourself
+      // due to async loading of your assets.
+      run: true,
     });
 
     // Output console messages if log == true

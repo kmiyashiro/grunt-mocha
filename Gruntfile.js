@@ -53,11 +53,6 @@ module.exports = function(grunt) {
           },
 
           reporter: 'Spec',
-
-          // Indicates whether 'mocha.run()' should be executed in
-          // 'bridge.js'
-          run: true,
-
           timeout: 10000
         }
       },
@@ -75,10 +70,6 @@ module.exports = function(grunt) {
 
           // URLs passed through as options
           urls: ['http://localhost:' + port + '/example/test/test2.html'],
-
-          // Indicates whether 'mocha.run()' should be executed in
-          // 'bridge.js'
-          run: true
         }
       },
 
@@ -91,7 +82,6 @@ module.exports = function(grunt) {
             grep: 'food'
           },
           reporter: './example/test/reporter/simple',
-          run: true
         }
       },
 
@@ -113,7 +103,6 @@ module.exports = function(grunt) {
         dest: 'example/test/results/spec.out',
         options: {
           reporter: 'Spec',
-          run: true
         }
       },
 
@@ -124,8 +113,6 @@ module.exports = function(grunt) {
 
           // URLs passed through as options
           urls: ['http://localhost:' + (port + 1) + '/example/test/test2.html'],
-
-          run: true
         },
         dest: 'example/test/results/xunit.out'
       },
@@ -135,7 +122,6 @@ module.exports = function(grunt) {
         src: ['example/test/testBail.html'],
         // Bail option
         options: {
-          run: true,
           bail: true
         }
       },
@@ -143,10 +129,6 @@ module.exports = function(grunt) {
       // This test should never run
       neverTest: {
         src: ['example/test/test.html'],
-        // Bail option
-        options: {
-          run: true
-        }
       },
 
       // Test page options

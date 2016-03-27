@@ -63,9 +63,7 @@ mocha: {
 
 #### options.run
 Type: `Boolean`
-Default: `false`
-
-**NOTE:** This will probably default to true in `0.5`.
+Default: `true`
 
 grunt-mocha injects a script into the PhantomJS instance that loads your HTML spec files. The file sets up a reporter and listeners so the output can be output in the command line. This option will call `mocha.run()` after the script is injected, ensuring that the proper listeners are setup.
 
@@ -272,12 +270,12 @@ Example:
 ```js
 mocha: {
   test: {
-    options: { 
-      page: { 
-        settings: { 
+    options: {
+      page: {
+        settings: {
           webSecurityEnabled: false,  // disable cors checks in phantomjs
         },  
-      }, 
+      },
     },
   },
 },
