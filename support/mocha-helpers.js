@@ -36,4 +36,4 @@ exports.reduceStats = function(stats) {
 
 exports.formatMs = function(ms) {
   return (Math.ceil(ms * 100) / 100000).toFixed(2);
-}
+};

@@ -185,7 +185,7 @@ module.exports = function(grunt) {
     // and we pass `dest` there but there's no good way to detect
     // if a reporter supports this so stub out console.log just in case.
     if (dest) {
-      grunt.file.delete(dest)
+      grunt.file.delete(dest);
       console.log = function() {
         consoleLog.apply(console, arguments);
         output.push(util.format.apply(util, arguments));

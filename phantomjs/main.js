@@ -8,7 +8,7 @@
  * Licensed under the MIT license.
  */
 
-/*global phantom:true*/
+/*global window: true, phantom:true*/
 
 'use strict';
 
