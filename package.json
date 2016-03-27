@@ -5,8 +5,7 @@
   "homepage": "https://github.com/kmiyashiro/grunt-mocha",
   "author": {
     "name": "Kelly Miyashiro",
-    "email": "miyashiro.kelly@gmail.com",
-    "url": "http://non-diligent.com"
+    "email": "miyashiro.kelly@gmail.com"
   },
   "repository": {
     "type": "git",
