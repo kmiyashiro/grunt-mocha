@@ -28,7 +28,7 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "grunt-lib-phantomjs": "gruntjs/grunt-lib-phantomjs#776bc346a8b7e151fe55c7f6dcb5563c0272e51b",
+    "grunt-lib-phantomjs": "^1.0.2",
     "mocha": "^2.4.5",
     "lodash": "^3.9.0"
   },
