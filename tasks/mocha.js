@@ -188,7 +188,9 @@ module.exports = function(grunt) {
     // and we pass `dest` there but there's no good way to detect
     // if a reporter supports this so stub out console.log just in case.
     if (dest) {
-      grunt.file.delete(dest);
+      if (grunt.file.isFile(dest)) {
+        grunt.file.delete(dest);
+      }
       console.log = function() {
         consoleLog.apply(console, arguments);
         output.push(util.format.apply(util, arguments));
@@ -233,7 +235,10 @@ module.exports = function(grunt) {
         grunt.fatal('Specified reporter is unknown or unresolvable: ' + options.reporter);
       }
       // XUnit reporter requires second arg (options)
-      reporter = new Reporter(runner, { reporterOptions: { output: dest } });
+      if (options.reporter === 'XUnit' && (options.reporterOptions || null) === null) {
+        options.reporterOptions = {output: dest};
+      }
+      reporter = new Reporter(runner, options);
 
       // Launch PhantomJS.
       phantomjs.spawn(url, {
