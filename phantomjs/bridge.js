@@ -39,7 +39,7 @@
     alert(JSON.stringify(args, decycle));
   }
 
-  // Create a listener who'll bubble events from Phantomjs to Grunt
+  // Create a listener who'll bubble events from PhantomJS to Grunt
   function createGruntListener(ev, runner) {
     runner.on(ev, function(test, err) {
       var data = {
@@ -52,6 +52,7 @@
         data.state = test.state;
         data.duration = test.duration;
         data.slow = test.slow;
+        data.pending = test.isPending();
       }
 
       sendMessage('mocha.' + ev, data);

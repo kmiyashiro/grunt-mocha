@@ -68,6 +68,7 @@ module.exports = function(grunt) {
         };
 
         test.parent = suites[suites.length - 1] || null;
+        test.isPending = function () { return test.pending; };
 
         err = test.err;
       }
@@ -117,6 +118,7 @@ module.exports = function(grunt) {
 
   grunt.registerMultiTask('mocha', 'Run Mocha unit tests in a headless PhantomJS instance.', function() {
 
+    var dest = this.data.dest;
     // Merge task-specific and/or target-specific options with these defaults.
     var options = this.options({
       // Output console.log calls
@@ -140,6 +142,7 @@ module.exports = function(grunt) {
       // Run tests, set to false if you would rather call `mocha.run` yourself
       // due to async loading of your assets.
       run: true,
+      reporterOptions: { output: dest },
     });
 
     // Output console messages if log == true
@@ -179,7 +182,6 @@ module.exports = function(grunt) {
     var done = this.async();
 
     // Hijack console.log to capture reporter output
-    var dest = this.data.dest;
     var output = [];
     var consoleLog = console.log;
 
@@ -233,10 +235,6 @@ module.exports = function(grunt) {
       }
       if (Reporter === null) {
         grunt.fatal('Specified reporter is unknown or unresolvable: ' + options.reporter);
-      }
-      // XUnit reporter requires second arg (options)
-      if (options.reporter === 'XUnit' && (options.reporterOptions || null) === null) {
-        options.reporterOptions = {output: dest};
       }
       reporter = new Reporter(runner, options);
 

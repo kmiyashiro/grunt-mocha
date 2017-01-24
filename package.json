@@ -22,24 +22,25 @@
   ],
   "main": "Gruntfile.js",
   "engines": {
-    "node": "*"
+    "node": ">=4"
   },
   "scripts": {
     "test": "grunt test"
   },
   "dependencies": {
     "grunt-lib-phantomjs": "^1.0.2",
-    "mocha": "^2.4.5",
     "lodash": "^3.9.0"
   },
   "peerDependencies": {
-    "grunt": ">=0.4.0"
+    "grunt": ">=0.4.0",
+    "mocha": ">=2.5.3"
   },
   "devDependencies": {
     "chai": "^3.4.1",
     "grunt": "~0.4",
     "grunt-contrib-connect": "~0.2",
-    "grunt-contrib-jshint": "~0.3"
+    "grunt-contrib-jshint": "~0.3",
+    "mocha": ">=2.5.3"
   },
   "keywords": [
     "gruntplugin",

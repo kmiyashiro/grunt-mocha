@@ -178,10 +178,7 @@ module.exports = function(grunt) {
     });
   });
 
-  // IMPORTANT: Actually load this plugin's task(s).
-  // To use grunt-mocha, replace with grunt.loadNpmTasks('grunt-mocha')
   grunt.loadTasks('tasks');
-  // grunt.loadNpmTasks('grunt-mocha');
 
   // These plugins provide necessary tasks.
   grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -207,7 +204,6 @@ module.exports = function(grunt) {
     'testReporter',
     'testDest',
     'testPage',
-    'testBail',
   ]);
 
   // By default, lint and run all tests.
