@@ -1,3 +1,9 @@
+# Repo deprecated
+
+Disqus has adopted this project and npm module, visit https://github.com/disqus/grunt-mocha for further updates.
+
+---
+
 # grunt-mocha
 
 > Automatically run *client-side* mocha specs via grunt/mocha/PhantomJS
